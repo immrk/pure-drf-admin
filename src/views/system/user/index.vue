@@ -46,6 +46,7 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="last_login" label="上次登录" align="center" />
         </el-table>
         <el-pagination v-model:current-page="form.page" v-model:page-size="form.size" :page-sizes="[10, 20, 30, 50]" layout="total, sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>

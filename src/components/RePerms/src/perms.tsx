@@ -12,9 +12,7 @@ export default defineComponent({
   setup(props, { slots }) {
     return () => {
       if (!slots) return null;
-      return hasPerms(props.value) ? (
-        <Fragment>{slots.default?.()}</Fragment>
-      ) : null;
+      return hasPerms(props.value) ? <Fragment>{slots.default?.()}</Fragment> : null;
     };
   }
 });

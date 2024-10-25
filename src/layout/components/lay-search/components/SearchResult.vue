@@ -20,8 +20,7 @@ const props = withDefaults(defineProps<Props>(), {});
 const itemStyle = computed(() => {
   return item => {
     return {
-      background:
-        item?.path === active.value ? useEpThemeStoreHook().epThemeColor : "",
+      background: item?.path === active.value ? useEpThemeStoreHook().epThemeColor : "",
       color: item.path === active.value ? "#fff" : "",
       fontSize: item.path === active.value ? "16px" : "14px"
     };
@@ -70,15 +69,7 @@ defineExpose({ handleScroll });
 
 <template>
   <div ref="resultRef" class="result">
-    <div
-      v-for="(item, index) in options"
-      :key="item.path"
-      :ref="'resultItemRef' + index"
-      class="result-item dark:bg-[#1d1d1d]"
-      :style="itemStyle(item)"
-      @click="handleTo"
-      @mouseenter="handleMouse(item)"
-    >
+    <div v-for="(item, index) in options" :key="item.path" :ref="'resultItemRef' + index" class="result-item dark:bg-[#1d1d1d]" :style="itemStyle(item)" @click="handleTo" @mouseenter="handleMouse(item)">
       <component :is="useRenderIcon(item.meta?.icon)" />
       <span class="result-item-title">
         {{ item.meta?.title }}

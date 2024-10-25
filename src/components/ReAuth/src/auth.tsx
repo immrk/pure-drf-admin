@@ -12,9 +12,7 @@ export default defineComponent({
   setup(props, { slots }) {
     return () => {
       if (!slots) return null;
-      return hasAuth(props.value) ? (
-        <Fragment>{slots.default?.()}</Fragment>
-      ) : null;
+      return hasAuth(props.value) ? <Fragment>{slots.default?.()}</Fragment> : null;
     };
   }
 });

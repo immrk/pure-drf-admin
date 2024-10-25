@@ -226,14 +226,7 @@ const components = [
   ElSegmented
 ];
 
-const plugins = [
-  ElLoading,
-  ElInfiniteScroll,
-  ElPopoverDirective,
-  ElMessage,
-  ElMessageBox,
-  ElNotification
-];
+const plugins = [ElLoading, ElInfiniteScroll, ElPopoverDirective, ElMessage, ElMessageBox, ElNotification];
 
 /** 按需引入`element-plus` */
 export function useElementPlus(app: App) {

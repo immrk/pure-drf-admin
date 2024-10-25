@@ -3,13 +3,7 @@ import { readdir, stat } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { sum, formatBytes } from "@pureadmin/utils";
-import {
-  name,
-  version,
-  engines,
-  dependencies,
-  devDependencies
-} from "../package.json";
+import { name, version, engines, dependencies, devDependencies } from "../package.json";
 
 /** 启动`node`进程时所在工作目录的绝对路径 */
 const root: string = process.cwd();
@@ -61,8 +55,7 @@ const wrapperEnv = (envConf: Recordable): ViteEnv => {
 
   for (const envName of Object.keys(envConf)) {
     let realName = envConf[envName].replace(/\\n/g, "\n");
-    realName =
-      realName === "true" ? true : realName === "false" ? false : realName;
+    realName = realName === "true" ? true : realName === "false" ? false : realName;
 
     if (envName === "VITE_PORT") {
       realName = Number(realName);
@@ -86,8 +79,7 @@ const getPackageSize = options => {
     if (err) throw err;
     let count = 0;
     const checkEnd = () => {
-      ++count == files.length &&
-        callback(format ? formatBytes(sum(fileListTotal)) : sum(fileListTotal));
+      ++count == files.length && callback(format ? formatBytes(sum(fileListTotal)) : sum(fileListTotal));
     };
     files.forEach((item: string) => {
       stat(`${folder}/${item}`, async (err, stats) => {

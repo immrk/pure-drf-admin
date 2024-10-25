@@ -1,15 +1,5 @@
 import { defineStore } from "pinia";
-import {
-  type cacheType,
-  store,
-  debounce,
-  ascending,
-  getKeyList,
-  filterTree,
-  constantMenus,
-  filterNoPermissionTree,
-  formatFlatteningRoutes
-} from "../utils";
+import { type cacheType, store, debounce, ascending, getKeyList, filterTree, constantMenus, filterNoPermissionTree, formatFlatteningRoutes } from "../utils";
 import { useMultiTagsStoreHook } from "./multiTags";
 
 export const usePermissionStore = defineStore({
@@ -27,12 +17,8 @@ export const usePermissionStore = defineStore({
   actions: {
     /** 组装整体路由生成的菜单 */
     handleWholeMenus(routes: any[]) {
-      this.wholeMenus = filterNoPermissionTree(
-        filterTree(ascending(this.constantMenus.concat(routes)))
-      );
-      this.flatteningRoutes = formatFlatteningRoutes(
-        this.constantMenus.concat(routes)
-      );
+      this.wholeMenus = filterNoPermissionTree(filterTree(ascending(this.constantMenus.concat(routes))));
+      this.flatteningRoutes = formatFlatteningRoutes(this.constantMenus.concat(routes));
     },
     cacheOperate({ mode, name }: cacheType) {
       const delIndex = this.cachePageList.findIndex(v => v === name);
@@ -52,12 +38,7 @@ export const usePermissionStore = defineStore({
         let cacheLength = this.cachePageList.length;
         const nameList = getKeyList(useMultiTagsStoreHook().multiTags, "name");
         while (cacheLength > 0) {
-          nameList.findIndex(v => v === this.cachePageList[cacheLength - 1]) ===
-            -1 &&
-            this.cachePageList.splice(
-              this.cachePageList.indexOf(this.cachePageList[cacheLength - 1]),
-              1
-            );
+          nameList.findIndex(v => v === this.cachePageList[cacheLength - 1]) === -1 && this.cachePageList.splice(this.cachePageList.indexOf(this.cachePageList[cacheLength - 1]), 1);
           cacheLength--;
         }
       })();

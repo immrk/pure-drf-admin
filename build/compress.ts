@@ -2,9 +2,7 @@ import type { Plugin } from "vite";
 import { isArray } from "@pureadmin/utils";
 import compressPlugin from "vite-plugin-compression";
 
-export const configCompressPlugin = (
-  compress: ViteCompression
-): Plugin | Plugin[] => {
+export const configCompressPlugin = (compress: ViteCompression): Plugin | Plugin[] => {
   if (compress === "none") return null;
 
   const gz = {
@@ -38,14 +36,10 @@ export const configCompressPlugin = (
       if (compress.includes("clear")) {
         if (isArray(item.v)) {
           item.v.forEach(vItem => {
-            plugins.push(
-              compressPlugin(Object.assign(vItem, { deleteOriginFile: true }))
-            );
+            plugins.push(compressPlugin(Object.assign(vItem, { deleteOriginFile: true })));
           });
         } else {
-          plugins.push(
-            compressPlugin(Object.assign(item.v, { deleteOriginFile: true }))
-          );
+          plugins.push(compressPlugin(Object.assign(item.v, { deleteOriginFile: true })));
         }
       } else {
         if (isArray(item.v)) {

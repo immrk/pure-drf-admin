@@ -6,8 +6,7 @@ type EmitType = (event: string, ...args: any[]) => void;
 
 type TargetContext = "_self" | "_blank";
 
-type ComponentRef<T extends HTMLElement = HTMLDivElement> =
-  ComponentElRef<T> | null;
+type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | null;
 
 type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>;
 

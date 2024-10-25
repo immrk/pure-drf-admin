@@ -35,29 +35,14 @@ interface MessageParams {
 /**
  * `Message` 消息提示函数
  */
-const message = (
-  message: string | VNode | (() => VNode),
-  params?: MessageParams
-): MessageHandler => {
+const message = (message: string | VNode | (() => VNode), params?: MessageParams): MessageHandler => {
   if (!params) {
     return ElMessage({
       message,
       customClass: "pure-message"
     });
   } else {
-    const {
-      icon,
-      type = "info",
-      dangerouslyUseHTMLString = false,
-      customClass = "antd",
-      duration = 2000,
-      showClose = false,
-      center = false,
-      offset = 20,
-      appendTo = document.body,
-      grouping = false,
-      onClose
-    } = params;
+    const { icon, type = "info", dangerouslyUseHTMLString = false, customClass = "antd", duration = 2000, showClose = false, center = false, offset = 20, appendTo = document.body, grouping = false, onClose } = params;
 
     return ElMessage({
       message,

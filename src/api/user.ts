@@ -3,7 +3,6 @@ import { http } from "@/utils/http";
 export type UserResult = {
   success: boolean;
   data: {
-    /** 头像 */
     avatar: string;
     /** 用户名 */
     username: string;
@@ -20,6 +19,16 @@ export type UserResult = {
     /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
     expires: Date;
   };
+  msg: string;
+};
+
+export type UserListResult = {
+  success: boolean;
+  data: Array<object>;
+  msg: string;
+  total: number;
+  page: number;
+  limit: number;
 };
 
 export type RefreshTokenResult = {
@@ -32,14 +41,37 @@ export type RefreshTokenResult = {
     /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
     expires: Date;
   };
+  msg: string;
 };
 
 /** 登录 */
 export const getLogin = (data?: object) => {
-  return http.request<UserResult>("post", "/login", { data });
+  return http.request<UserResult>("post", "/api/user/login/", { data });
 };
 
 /** 刷新`token` */
 export const refreshTokenApi = (data?: object) => {
-  return http.request<RefreshTokenResult>("post", "/refresh-token", { data });
+  return http.request<RefreshTokenResult>("post", "/api/token/refresh/", {
+    data
+  });
+};
+
+/** 获取用户数据列表 */
+export const getUserList = (params?: object) => {
+  return http.request<UserListResult>("get", "/api/user/", { params });
+};
+
+/** 更新用户数据 */
+export const patchUser = (id?: number, data?: object) => {
+  return http.request<UserResult>("patch", "/api/user/" + id + "/", { data });
+};
+
+/** 新增用户数据 */
+export const postUser = (data?: object) => {
+  return http.request<UserResult>("post", "/api/user/", { data });
+};
+
+/** 删除用户数据 */
+export const deleteUser = (id?: number) => {
+  return http.request<UserResult>("delete", "/api/user/" + id + "/");
 };

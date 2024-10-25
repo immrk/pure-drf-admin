@@ -26,8 +26,7 @@ const props = withDefaults(defineProps<Props>(), {});
 const itemStyle = computed(() => {
   return item => {
     return {
-      background:
-        item?.path === active.value ? useEpThemeStoreHook().epThemeColor : "",
+      background: item?.path === active.value ? useEpThemeStoreHook().epThemeColor : "",
       color: item.path === active.value ? "#fff" : "",
       fontSize: item.path === active.value ? "16px" : "14px"
     };
@@ -97,9 +96,7 @@ useResizeObserver(historyRef, resizeResult);
 function handleScroll(index: number) {
   const curInstance = instance?.proxy?.$refs[`historyItemRef${index}`];
   if (!curInstance) return 0;
-  const curRef = isArray(curInstance)
-    ? (curInstance[0] as ElRef)
-    : (curInstance as ElRef);
+  const curRef = isArray(curInstance) ? (curInstance[0] as ElRef) : (curInstance as ElRef);
   const scrollTop = curRef.offsetTop + 128; // 128 两个history-item（56px+56px=112px）高度加上下margin（8px+8px=16px）
   return scrollTop > innerHeight.value ? scrollTop - innerHeight.value : 0;
 }
@@ -115,8 +112,7 @@ watch(
   val => {
     if (val.length > 1) {
       nextTick(() => {
-        const wrapper: HTMLElement =
-          document.querySelector(".collect-container");
+        const wrapper: HTMLElement = document.querySelector(".collect-container");
         if (!wrapper || sortableInstance) return;
         sortableInstance = Sortable.create(wrapper, {
           animation: 160,
@@ -142,20 +138,8 @@ defineExpose({ handleScroll });
   <div ref="historyRef" class="history">
     <template v-if="historyList.length">
       <div :style="titleStyle">搜索历史</div>
-      <div
-        v-for="(item, index) in historyList"
-        :key="item.path"
-        :ref="'historyItemRef' + index"
-        class="history-item dark:bg-[#1d1d1d]"
-        :style="itemStyle(item)"
-        @click="handleTo"
-        @mouseenter="handleMouse(item)"
-      >
-        <SearchHistoryItem
-          :item="item"
-          @delete-item="handleDelete"
-          @collect-item="handleCollect"
-        />
+      <div v-for="(item, index) in historyList" :key="item.path" :ref="'historyItemRef' + index" class="history-item dark:bg-[#1d1d1d]" :style="itemStyle(item)" @click="handleTo" @mouseenter="handleMouse(item)">
+        <SearchHistoryItem :item="item" @delete-item="handleDelete" @collect-item="handleCollect" />
       </div>
     </template>
     <template v-if="collectList.length">
@@ -163,15 +147,7 @@ defineExpose({ handleScroll });
         {{ `收藏${collectList.length > 1 ? "（可拖拽排序）" : ""}` }}
       </div>
       <div class="collect-container">
-        <div
-          v-for="(item, index) in collectList"
-          :key="item.path"
-          :ref="'historyItemRef' + (index + historyList.length)"
-          class="history-item dark:bg-[#1d1d1d]"
-          :style="itemStyle(item)"
-          @click="handleTo"
-          @mouseenter="handleMouse(item)"
-        >
+        <div v-for="(item, index) in collectList" :key="item.path" :ref="'historyItemRef' + (index + historyList.length)" class="history-item dark:bg-[#1d1d1d]" :style="itemStyle(item)" @click="handleTo" @mouseenter="handleMouse(item)">
           <SearchHistoryItem :item="item" @delete-item="handleDelete" />
         </div>
       </div>

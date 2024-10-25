@@ -8,10 +8,7 @@ export function useLayout() {
 
   const initStorage = () => {
     /** 路由 */
-    if (
-      useMultiTagsStore().multiTagsCache &&
-      (!$storage.tags || $storage.tags.length === 0)
-    ) {
+    if (useMultiTagsStore().multiTagsCache && (!$storage.tags || $storage.tags.length === 0)) {
       $storage.tags = routerArrays;
     }
     /** 导航 */

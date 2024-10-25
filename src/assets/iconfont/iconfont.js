@@ -16,9 +16,7 @@
       if (c && !e.__iconfont__svg__cssinject__) {
         e.__iconfont__svg__cssinject__ = !0;
         try {
-          document.write(
-            "<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>"
-          );
+          document.write("<style>.svgfont {display: inline-block;width: 1em;height: 1em;fill: currentColor;vertical-align: -0.1em;font-size:16px;}</style>");
         } catch (t) {
           console && console.log(t);
         }
@@ -26,17 +24,7 @@
       (n = function () {
         var t,
           c = document.createElement("div");
-        (c.innerHTML = e._iconfont_svg_string_2208059),
-          (c = c.getElementsByTagName("svg")[0]) &&
-            (c.setAttribute("aria-hidden", "true"),
-            (c.style.position = "absolute"),
-            (c.style.width = 0),
-            (c.style.height = 0),
-            (c.style.overflow = "hidden"),
-            (c = c),
-            (t = document.body).firstChild
-              ? h(c, t.firstChild)
-              : t.appendChild(c));
+        (c.innerHTML = e._iconfont_svg_string_2208059), (c = c.getElementsByTagName("svg")[0]) && (c.setAttribute("aria-hidden", "true"), (c.style.position = "absolute"), (c.style.width = 0), (c.style.height = 0), (c.style.overflow = "hidden"), (c = c), (t = document.body).firstChild ? h(c, t.firstChild) : t.appendChild(c));
       }),
         document.addEventListener
           ? ~["complete", "loaded", "interactive"].indexOf(document.readyState)
@@ -51,8 +39,7 @@
             (a = !1),
             v(),
             (o.onreadystatechange = function () {
-              "complete" == o.readyState &&
-                ((o.onreadystatechange = null), d());
+              "complete" == o.readyState && ((o.onreadystatechange = null), d());
             }));
     }
     function d() {

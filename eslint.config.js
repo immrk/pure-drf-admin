@@ -10,14 +10,7 @@ import pluginTypeScript from "@typescript-eslint/eslint-plugin";
 export default defineFlatConfig([
   {
     ...js.configs.recommended,
-    ignores: [
-      "**/.*",
-      "dist/*",
-      "*.d.ts",
-      "public/*",
-      "src/assets/**",
-      "src/**/iconfont/**"
-    ],
+    ignores: ["**/.*", "dist/*", "*.d.ts", "public/*", "src/assets/**", "src/**/iconfont/**"],
     languageOptions: {
       globals: {
         // index.d.ts
@@ -95,14 +88,8 @@ export default defineFlatConfig([
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-import-type-side-effects": "error",
       "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/consistent-type-imports": [
-        "error",
-        { disallowTypeAnnotations: false, fixStyle: "inline-type-imports" }
-      ],
-      "@typescript-eslint/prefer-literal-enum-member": [
-        "error",
-        { allowBitwiseExpressions: true }
-      ],
+      "@typescript-eslint/consistent-type-imports": ["error", { disallowTypeAnnotations: false, fixStyle: "inline-type-imports" }],
+      "@typescript-eslint/prefer-literal-enum-member": ["error", { allowBitwiseExpressions: true }],
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

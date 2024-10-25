@@ -17,9 +17,7 @@ export default defineComponent({
       IconifyIcon,
       {
         icon: this.icon,
-        style: attrs?.style
-          ? Object.assign(attrs.style, { outline: "none" })
-          : { outline: "none" },
+        style: attrs?.style ? Object.assign(attrs.style, { outline: "none" }) : { outline: "none" },
         ...attrs
       },
       {

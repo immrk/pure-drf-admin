@@ -2,11 +2,7 @@
 
 /** @type {import("stylelint").Config} */
 export default {
-  extends: [
-    "stylelint-config-standard",
-    "stylelint-config-html/vue",
-    "stylelint-config-recess-order"
-  ],
+  extends: ["stylelint-config-standard", "stylelint-config-html/vue", "stylelint-config-recess-order"],
   plugins: ["stylelint-scss", "stylelint-order", "stylelint-prettier"],
   overrides: [
     {
@@ -16,10 +12,7 @@ export default {
     {
       files: ["*.scss", "**/*.scss"],
       customSyntax: "postcss-scss",
-      extends: [
-        "stylelint-config-standard-scss",
-        "stylelint-config-recommended-vue/scss"
-      ]
+      extends: ["stylelint-config-standard-scss", "stylelint-config-recommended-vue/scss"]
     }
   ],
   rules: {
@@ -27,6 +20,7 @@ export default {
     "selector-class-pattern": null,
     "no-descending-specificity": null,
     "scss/dollar-variable-pattern": null,
+    "no-empty-source": null,
     "selector-pseudo-class-no-unknown": [
       true,
       {
@@ -42,19 +36,7 @@ export default {
     "at-rule-no-unknown": [
       true,
       {
-        ignoreAtRules: [
-          "tailwind",
-          "apply",
-          "variants",
-          "responsive",
-          "screen",
-          "function",
-          "if",
-          "each",
-          "include",
-          "mixin",
-          "use"
-        ]
+        ignoreAtRules: ["tailwind", "apply", "variants", "responsive", "screen", "function", "if", "each", "include", "mixin", "use"]
       }
     ],
     "rule-empty-line-before": [

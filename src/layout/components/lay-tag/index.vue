@@ -10,12 +10,7 @@ import { useSettingStoreHook } from "@/store/modules/settings";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { ref, watch, unref, toRaw, nextTick, onBeforeUnmount } from "vue";
-import {
-  delay,
-  isEqual,
-  isAllEmpty,
-  useResizeObserver
-} from "@pureadmin/utils";
+import { delay, isEqual, isAllEmpty, useResizeObserver } from "@pureadmin/utils";
 
 import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
 import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
@@ -23,35 +18,7 @@ import ArrowDown from "@iconify-icons/ri/arrow-down-s-line";
 import ArrowRightSLine from "@iconify-icons/ri/arrow-right-s-line";
 import ArrowLeftSLine from "@iconify-icons/ri/arrow-left-s-line";
 
-const {
-  Close,
-  route,
-  router,
-  visible,
-  showTags,
-  instance,
-  multiTags,
-  tagsViews,
-  buttonTop,
-  buttonLeft,
-  showModel,
-  translateX,
-  isFixedTag,
-  pureSetting,
-  activeIndex,
-  getTabStyle,
-  isScrolling,
-  iconIsActive,
-  linkIsActive,
-  currentSelect,
-  scheduleIsActive,
-  getContextMenuStyle,
-  closeMenu,
-  onMounted,
-  onMouseenter,
-  onMouseleave,
-  onContentFullScreen
-} = useTags();
+const { Close, route, router, visible, showTags, instance, multiTags, tagsViews, buttonTop, buttonLeft, showModel, translateX, isFixedTag, pureSetting, activeIndex, getTabStyle, isScrolling, iconIsActive, linkIsActive, currentSelect, scheduleIsActive, getContextMenuStyle, closeMenu, onMounted, onMouseenter, onMouseleave, onContentFullScreen } = useTags();
 
 const tabDom = ref();
 const containerDom = ref();
@@ -60,10 +27,7 @@ const contextmenuRef = ref();
 const isShowArrow = ref(false);
 const topPath = getTopMenu()?.path;
 const { VITE_HIDE_HOME } = import.meta.env;
-const fixedTags = [
-  ...routerArrays,
-  ...usePermissionStoreHook().flatteningRoutes.filter(v => v?.meta?.fixedTag)
-];
+const fixedTags = [...routerArrays, ...usePermissionStoreHook().flatteningRoutes.filter(v => v?.meta?.fixedTag)];
 
 const dynamicTagView = async () => {
   await nextTick();
@@ -87,57 +51,35 @@ const moveToView = async (index: number): Promise<void> => {
   const tabItemElOffsetLeft = (tabItemEl as HTMLElement)?.offsetLeft;
   const tabItemOffsetWidth = (tabItemEl as HTMLElement)?.offsetWidth;
   // 标签页导航栏可视长度（不包含溢出部分）
-  const scrollbarDomWidth = scrollbarDom.value
-    ? scrollbarDom.value?.offsetWidth
-    : 0;
+  const scrollbarDomWidth = scrollbarDom.value ? scrollbarDom.value?.offsetWidth : 0;
 
   // 已有标签页总长度（包含溢出部分）
   const tabDomWidth = tabDom.value ? tabDom.value?.offsetWidth : 0;
 
-  scrollbarDomWidth <= tabDomWidth
-    ? (isShowArrow.value = true)
-    : (isShowArrow.value = false);
+  scrollbarDomWidth <= tabDomWidth ? (isShowArrow.value = true) : (isShowArrow.value = false);
   if (tabDomWidth < scrollbarDomWidth || tabItemElOffsetLeft === 0) {
     translateX.value = 0;
   } else if (tabItemElOffsetLeft < -translateX.value) {
     // 标签在可视区域左侧
     translateX.value = -tabItemElOffsetLeft + tabNavPadding;
-  } else if (
-    tabItemElOffsetLeft > -translateX.value &&
-    tabItemElOffsetLeft + tabItemOffsetWidth <
-      -translateX.value + scrollbarDomWidth
-  ) {
+  } else if (tabItemElOffsetLeft > -translateX.value && tabItemElOffsetLeft + tabItemOffsetWidth < -translateX.value + scrollbarDomWidth) {
     // 标签在可视区域
-    translateX.value = Math.min(
-      0,
-      scrollbarDomWidth -
-        tabItemOffsetWidth -
-        tabItemElOffsetLeft -
-        tabNavPadding
-    );
+    translateX.value = Math.min(0, scrollbarDomWidth - tabItemOffsetWidth - tabItemElOffsetLeft - tabNavPadding);
   } else {
     // 标签在可视区域右侧
-    translateX.value = -(
-      tabItemElOffsetLeft -
-      (scrollbarDomWidth - tabNavPadding - tabItemOffsetWidth)
-    );
+    translateX.value = -(tabItemElOffsetLeft - (scrollbarDomWidth - tabNavPadding - tabItemOffsetWidth));
   }
 };
 
 const handleScroll = (offset: number): void => {
-  const scrollbarDomWidth = scrollbarDom.value
-    ? scrollbarDom.value?.offsetWidth
-    : 0;
+  const scrollbarDomWidth = scrollbarDom.value ? scrollbarDom.value?.offsetWidth : 0;
   const tabDomWidth = tabDom.value ? tabDom.value.offsetWidth : 0;
   if (offset > 0) {
     translateX.value = Math.min(0, translateX.value + offset);
   } else {
     if (scrollbarDomWidth < tabDomWidth) {
       if (translateX.value >= -(tabDomWidth - scrollbarDomWidth)) {
-        translateX.value = Math.max(
-          translateX.value + offset,
-          scrollbarDomWidth - tabDomWidth
-        );
+        translateX.value = Math.max(translateX.value + offset, scrollbarDomWidth - tabDomWidth);
       }
     } else {
       translateX.value = 0;
@@ -227,19 +169,9 @@ function deleteDynamicTag(obj: any, current: any, tag?: string) {
     }
   });
 
-  const spliceRoute = (
-    startIndex?: number,
-    length?: number,
-    other?: boolean
-  ): void => {
+  const spliceRoute = (startIndex?: number, length?: number, other?: boolean): void => {
     if (other) {
-      useMultiTagsStoreHook().handleTags(
-        "equal",
-        [
-          VITE_HIDE_HOME === "false" ? fixedTags : toRaw(getTopMenu()),
-          obj
-        ].flat()
-      );
+      useMultiTagsStoreHook().handleTags("equal", [VITE_HIDE_HOME === "false" ? fixedTags : toRaw(getTopMenu()), obj].flat());
     } else {
       useMultiTagsStoreHook().handleTags("splice", "", {
         startIndex,
@@ -383,11 +315,7 @@ function disabledMenus(value: boolean, fixedTag = false) {
 }
 
 /** 检查当前右键的菜单两边是否存在别的菜单，如果左侧的菜单是顶级菜单，则不显示关闭左侧标签页，如果右侧没有菜单，则不显示关闭右侧标签页 */
-function showMenuModel(
-  currentPath: string,
-  query: object = {},
-  refresh = false
-) {
+function showMenuModel(currentPath: string, query: object = {}, refresh = false) {
   const allRoute = multiTags.value;
   const routeLength = multiTags.value.length;
   let currentIndex = -1;
@@ -481,9 +409,7 @@ function openMenu(tag, e) {
   } else {
     buttonLeft.value = left;
   }
-  useSettingStoreHook().hiddenSideBar
-    ? (buttonTop.value = e.clientY)
-    : (buttonTop.value = e.clientY - 40);
+  useSettingStoreHook().hiddenSideBar ? (buttonTop.value = e.clientY) : (buttonTop.value = e.clientY - 40);
   nextTick(() => {
     visible.value = true;
   });
@@ -562,51 +488,17 @@ onBeforeUnmount(() => {
     <span v-show="isShowArrow" class="arrow-left">
       <IconifyIconOffline :icon="ArrowLeftSLine" @click="handleScroll(200)" />
     </span>
-    <div
-      ref="scrollbarDom"
-      class="scroll-container"
-      :class="showModel === 'chrome' && 'chrome-scroll-container'"
-      @wheel.prevent="handleWheel"
-    >
+    <div ref="scrollbarDom" class="scroll-container" :class="showModel === 'chrome' && 'chrome-scroll-container'" @wheel.prevent="handleWheel">
       <div ref="tabDom" class="tab select-none" :style="getTabStyle">
-        <div
-          v-for="(item, index) in multiTags"
-          :ref="'dynamic' + index"
-          :key="index"
-          :class="[
-            'scroll-item is-closable',
-            linkIsActive(item),
-            showModel === 'chrome' && 'chrome-item',
-            isFixedTag(item) && 'fixed-tag'
-          ]"
-          @contextmenu.prevent="openMenu(item, $event)"
-          @mouseenter.prevent="onMouseenter(index)"
-          @mouseleave.prevent="onMouseleave(index)"
-          @click="tagOnClick(item)"
-        >
+        <div v-for="(item, index) in multiTags" :ref="'dynamic' + index" :key="index" :class="['scroll-item is-closable', linkIsActive(item), showModel === 'chrome' && 'chrome-item', isFixedTag(item) && 'fixed-tag']" @contextmenu.prevent="openMenu(item, $event)" @mouseenter.prevent="onMouseenter(index)" @mouseleave.prevent="onMouseleave(index)" @click="tagOnClick(item)">
           <template v-if="showModel !== 'chrome'">
-            <span
-              class="tag-title dark:!text-text_color_primary dark:hover:!text-primary"
-            >
+            <span class="tag-title dark:!text-text_color_primary dark:hover:!text-primary">
               {{ item.meta.title }}
             </span>
-            <span
-              v-if="
-                isFixedTag(item)
-                  ? false
-                  : iconIsActive(item, index) ||
-                    (index === activeIndex && index !== 0)
-              "
-              class="el-icon-close"
-              @click.stop="deleteMenu(item)"
-            >
+            <span v-if="isFixedTag(item) ? false : iconIsActive(item, index) || (index === activeIndex && index !== 0)" class="el-icon-close" @click.stop="deleteMenu(item)">
               <IconifyIconOffline :icon="Close" />
             </span>
-            <span
-              v-if="showModel !== 'card'"
-              :ref="'schedule' + index"
-              :class="[scheduleIsActive(item)]"
-            />
+            <span v-if="showModel !== 'card'" :ref="'schedule' + index" :class="[scheduleIsActive(item)]" />
           </template>
           <div v-else class="chrome-tab">
             <div class="chrome-tab__bg">
@@ -615,11 +507,7 @@ onBeforeUnmount(() => {
             <span class="tag-title">
               {{ item.meta.title }}
             </span>
-            <span
-              v-if="isFixedTag(item) ? false : index !== 0"
-              class="chrome-close-btn"
-              @click.stop="deleteMenu(item)"
-            >
+            <span v-if="isFixedTag(item) ? false : index !== 0" class="chrome-close-btn" @click.stop="deleteMenu(item)">
               <IconifyIconOffline :icon="Close" />
             </span>
             <span class="chrome-tab-divider" />
@@ -632,18 +520,8 @@ onBeforeUnmount(() => {
     </span>
     <!-- 右键菜单按钮 -->
     <transition name="el-zoom-in-top">
-      <ul
-        v-show="visible"
-        ref="contextmenuRef"
-        :key="Math.random()"
-        :style="getContextMenuStyle"
-        class="contextmenu"
-      >
-        <div
-          v-for="(item, key) in tagsViews.slice(0, 6)"
-          :key="key"
-          style="display: flex; align-items: center"
-        >
+      <ul v-show="visible" ref="contextmenuRef" :key="Math.random()" :style="getContextMenuStyle" class="contextmenu">
+        <div v-for="(item, key) in tagsViews.slice(0, 6)" :key="key" style="display: flex; align-items: center">
           <li v-if="item.show" @click="selectTag(key, item)">
             <IconifyIconOffline :icon="item.icon" />
             {{ item.text }}
@@ -652,23 +530,13 @@ onBeforeUnmount(() => {
       </ul>
     </transition>
     <!-- 右侧功能按钮 -->
-    <el-dropdown
-      trigger="click"
-      placement="bottom-end"
-      @command="handleCommand"
-    >
+    <el-dropdown trigger="click" placement="bottom-end" @command="handleCommand">
       <span class="arrow-down">
         <IconifyIconOffline :icon="ArrowDown" class="dark:text-white" />
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-            v-for="(item, key) in tagsViews"
-            :key="key"
-            :command="{ key, item }"
-            :divided="item.divided"
-            :disabled="item.disabled"
-          >
+          <el-dropdown-item v-for="(item, key) in tagsViews" :key="key" :command="{ key, item }" :divided="item.divided" :disabled="item.disabled">
             <IconifyIconOffline :icon="item.icon" />
             {{ item.text }}
           </el-dropdown-item>

@@ -10,8 +10,7 @@ export interface RippleOptions {
   circle?: boolean;
 }
 
-export interface RippleDirectiveBinding
-  extends Omit<DirectiveBinding, "modifiers" | "value"> {
+export interface RippleDirectiveBinding extends Omit<DirectiveBinding, "modifiers" | "value"> {
   value?: boolean | { class: string };
   modifiers: {
     center?: boolean;
@@ -24,11 +23,7 @@ function transform(el: HTMLElement, value: string) {
   el.style.webkitTransform = value;
 }
 
-const calculate = (
-  e: PointerEvent,
-  el: HTMLElement,
-  value: RippleOptions = {}
-) => {
+const calculate = (e: PointerEvent, el: HTMLElement, value: RippleOptions = {}) => {
   const offset = el.getBoundingClientRect();
 
   // 获取点击位置距离 el 的垂直和水平距离
@@ -41,9 +36,7 @@ const calculate = (
   if (el._ripple?.circle) {
     scale = 0.15;
     radius = el.clientWidth / 2;
-    radius = value.center
-      ? radius
-      : radius + Math.sqrt((localX - radius) ** 2 + (localY - radius) ** 2) / 4;
+    radius = value.center ? radius : radius + Math.sqrt((localX - radius) ** 2 + (localY - radius) ** 2) / 4;
   } else {
     radius = Math.sqrt(el.clientWidth ** 2 + el.clientHeight ** 2) / 2;
   }
@@ -97,10 +90,7 @@ const ripples = {
 
     animation.classList.add("v-ripple__animation--enter");
     animation.classList.add("v-ripple__animation--visible");
-    transform(
-      animation,
-      `translate(${x}, ${y}) scale3d(${scale},${scale},${scale})`
-    );
+    transform(animation, `translate(${x}, ${y}) scale3d(${scale},${scale},${scale})`);
     animation.dataset.activated = String(performance.now());
 
     setTimeout(() => {
@@ -135,8 +125,7 @@ const ripples = {
           delete el.dataset.previousPosition;
         }
 
-        if (animation.parentNode?.parentNode === el)
-          el.removeChild(animation.parentNode);
+        if (animation.parentNode?.parentNode === el) el.removeChild(animation.parentNode);
       }, 300);
     }, delay);
   }
@@ -172,11 +161,7 @@ function rippleHide(e: Event) {
   ripples.hide(element);
 }
 
-function updateRipple(
-  el: HTMLElement,
-  binding: RippleDirectiveBinding,
-  wasEnabled: boolean
-) {
+function updateRipple(el: HTMLElement, binding: RippleDirectiveBinding, wasEnabled: boolean) {
   const { value, modifiers } = binding;
   const enabled = isRippleEnabled(value);
   if (!enabled) {

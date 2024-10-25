@@ -16,16 +16,7 @@ withDefaults(defineProps<Props>(), {
 const { tooltipEffect } = useNav();
 
 const iconClass = computed(() => {
-  return [
-    "ml-4",
-    "mb-1",
-    "w-[16px]",
-    "h-[16px]",
-    "inline-block",
-    "align-middle",
-    "cursor-pointer",
-    "duration-[100ms]"
-  ];
+  return ["ml-4", "mb-1", "w-[16px]", "h-[16px]", "inline-block", "align-middle", "cursor-pointer", "duration-[100ms]"];
 });
 
 const { $storage } = useGlobal<GlobalPropertiesApi>();

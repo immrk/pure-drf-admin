@@ -30,17 +30,8 @@ function handleDelete(item) {
   <span class="history-item-title">
     {{ item.meta?.title }}
   </span>
-  <IconifyIconOffline
-    v-show="item.type === 'history'"
-    :icon="StarIcon"
-    class="w-[18px] h-[18px] mr-2 hover:text-[#d7d5d4]"
-    @click.stop="handleCollect(item)"
-  />
-  <IconifyIconOffline
-    :icon="CloseIcon"
-    class="w-[18px] h-[18px] hover:text-[#d7d5d4] cursor-pointer"
-    @click.stop="handleDelete(item)"
-  />
+  <IconifyIconOffline v-show="item.type === 'history'" :icon="StarIcon" class="w-[18px] h-[18px] mr-2 hover:text-[#d7d5d4]" @click.stop="handleCollect(item)" />
+  <IconifyIconOffline :icon="CloseIcon" class="w-[18px] h-[18px] hover:text-[#d7d5d4] cursor-pointer" @click.stop="handleDelete(item)" />
 </template>
 
 <style lang="scss" scoped>

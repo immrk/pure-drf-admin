@@ -37,8 +37,7 @@ export const deleteChildren = (tree: any[], pathList = []): any => {
     node.id = key;
     node.parentId = pathList.length ? pathList[pathList.length - 1] : null;
     node.pathList = [...pathList, node.id];
-    node.uniqueId =
-      node.pathList.length > 1 ? node.pathList.join("-") : node.pathList[0];
+    node.uniqueId = node.pathList.length > 1 ? node.pathList.join("-") : node.pathList[0];
     const hasChildren = node.children && node.children.length > 0;
     if (hasChildren) {
       deleteChildren(node.children, node.pathList);
@@ -77,10 +76,7 @@ export const buildHierarchyTree = (tree: any[], pathList = []): any => {
  * @param uniqueId 唯一uniqueId
  * @returns 当前节点信息
  */
-export const getNodeByUniqueId = (
-  tree: any[],
-  uniqueId: number | string
-): any => {
+export const getNodeByUniqueId = (tree: any[], uniqueId: number | string): any => {
   if (!Array.isArray(tree)) {
     console.warn("menuTree must be an array");
     return [];
@@ -102,11 +98,7 @@ export const getNodeByUniqueId = (
  * @param fields 需要追加的字段
  * @returns 追加字段后的树
  */
-export const appendFieldByUniqueId = (
-  tree: any[],
-  uniqueId: number | string,
-  fields: object
-): any => {
+export const appendFieldByUniqueId = (tree: any[], uniqueId: number | string, fields: object): any => {
   if (!Array.isArray(tree)) {
     console.warn("menuTree must be an array");
     return [];
@@ -114,11 +106,7 @@ export const appendFieldByUniqueId = (
   if (!tree || tree.length === 0) return [];
   for (const node of tree) {
     const hasChildren = node.children && node.children.length > 0;
-    if (
-      node.uniqueId === uniqueId &&
-      Object.prototype.toString.call(fields) === "[object Object]"
-    )
-      Object.assign(node, fields);
+    if (node.uniqueId === uniqueId && Object.prototype.toString.call(fields) === "[object Object]") Object.assign(node, fields);
     if (hasChildren) {
       appendFieldByUniqueId(node.children, uniqueId, fields);
     }
@@ -134,12 +122,7 @@ export const appendFieldByUniqueId = (
  * @param children 子节点字段，默认children
  * @returns 追加字段后的树
  */
-export const handleTree = (
-  data: any[],
-  id?: string,
-  parentId?: string,
-  children?: string
-): any => {
+export const handleTree = (data: any[], id?: string, parentId?: string, children?: string): any => {
   if (!Array.isArray(data)) {
     console.warn("data must be an array");
     return [];

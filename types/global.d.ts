@@ -50,14 +50,7 @@ declare global {
   /**
    * 打包压缩格式的类型声明
    */
-  type ViteCompression =
-    | "none"
-    | "gzip"
-    | "brotli"
-    | "both"
-    | "gzip-clear"
-    | "brotli-clear"
-    | "both-clear";
+  type ViteCompression = "none" | "gzip" | "brotli" | "both" | "gzip-clear" | "brotli-clear" | "both-clear";
 
   /**
    * 全局自定义环境变量的类型声明

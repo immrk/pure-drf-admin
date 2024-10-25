@@ -7,40 +7,17 @@ import remainingRouter from "./modules/remaining";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { isUrl, openLink, storageLocal, isAllEmpty } from "@pureadmin/utils";
-import {
-  ascending,
-  getTopMenu,
-  initRouter,
-  isOneOfArray,
-  getHistoryMode,
-  findRouteByPath,
-  handleAliveRoute,
-  formatTwoStageRoutes,
-  formatFlatteningRoutes
-} from "./utils";
-import {
-  type Router,
-  createRouter,
-  type RouteRecordRaw,
-  type RouteComponent
-} from "vue-router";
-import {
-  type DataInfo,
-  userKey,
-  removeToken,
-  multipleTabsKey
-} from "@/utils/auth";
+import { ascending, getTopMenu, initRouter, isOneOfArray, getHistoryMode, findRouteByPath, handleAliveRoute, formatTwoStageRoutes, formatFlatteningRoutes } from "./utils";
+import { type Router, createRouter, type RouteRecordRaw, type RouteComponent } from "vue-router";
+import { type DataInfo, userKey, removeToken, multipleTabsKey } from "@/utils/auth";
 
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax
  * 如何排除文件请看：https://cn.vitejs.dev/guide/features.html#negative-patterns
  */
-const modules: Record<string, any> = import.meta.glob(
-  ["./modules/**/*.ts", "!./modules/**/remaining.ts"],
-  {
-    eager: true
-  }
-);
+const modules: Record<string, any> = import.meta.glob(["./modules/**/*.ts", "!./modules/**/remaining.ts", "!./modules/system.ts"], {
+  eager: true
+});
 
 /** 原始静态路由（未做任何处理） */
 const routes = [];
@@ -50,14 +27,10 @@ Object.keys(modules).forEach(key => {
 });
 
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
-export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
-  formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity))))
-);
+export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))));
 
 /** 用于渲染菜单，保持原始层级 */
-export const constantMenus: Array<RouteComponent> = ascending(
-  routes.flat(Infinity)
-).concat(...remainingRouter);
+export const constantMenus: Array<RouteComponent> = ascending(routes.flat(Infinity)).concat(...remainingRouter);
 
 /** 不参与菜单的路由 */
 export const remainingPaths = Object.keys(remainingRouter).map(v => {
@@ -75,8 +48,7 @@ export const router: Router = createRouter({
         return savedPosition;
       } else {
         if (from.meta.saveSrollTop) {
-          const top: number =
-            document.documentElement.scrollTop || document.body.scrollTop;
+          const top: number = document.documentElement.scrollTop || document.body.scrollTop;
           resolve({ left: 0, top });
         }
       }
@@ -90,11 +62,7 @@ export function resetRouter() {
     const { name, meta } = route;
     if (name && router.hasRoute(name) && meta?.backstage) {
       router.removeRoute(name);
-      router.options.routes = formatTwoStageRoutes(
-        formatFlatteningRoutes(
-          buildHierarchyTree(ascending(routes.flat(Infinity)))
-        )
-      );
+      router.options.routes = formatTwoStageRoutes(formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))));
     }
   });
   usePermissionStoreHook().clearAllCachePage();
@@ -147,17 +115,11 @@ router.beforeEach((to: ToRouteType, _from, next) => {
       }
     } else {
       // 刷新
-      if (
-        usePermissionStoreHook().wholeMenus.length === 0 &&
-        to.path !== "/login"
-      ) {
+      if (usePermissionStoreHook().wholeMenus.length === 0 && to.path !== "/login") {
         initRouter().then((router: Router) => {
           if (!useMultiTagsStoreHook().getMultiTagsCache) {
             const { path } = to;
-            const route = findRouteByPath(
-              path,
-              router.options.routes[0].children
-            );
+            const route = findRouteByPath(path, router.options.routes[0].children);
             getTopMenu(true);
             // query、params模式路由传参数的标签页不在此处处理
             if (route && route.meta?.title) {

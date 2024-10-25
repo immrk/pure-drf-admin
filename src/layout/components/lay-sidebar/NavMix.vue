@@ -16,25 +16,13 @@ import Setting from "@iconify-icons/ri/settings-3-line";
 const menuRef = ref();
 const defaultActive = ref(null);
 
-const {
-  route,
-  device,
-  logout,
-  onPanel,
-  resolvePath,
-  username,
-  userAvatar,
-  getDivStyle,
-  avatarsStyle
-} = useNav();
+const { route, device, logout, onPanel, resolvePath, username, userAvatar, getDivStyle, avatarsStyle } = useNav();
 
 function getDefaultActive(routePath) {
   const wholeMenus = usePermissionStoreHook().wholeMenus;
   /** 当前路由的父级路径 */
   const parentRoutes = getParentPaths(routePath, wholeMenus)[0];
-  defaultActive.value = !isAllEmpty(route.meta?.activePath)
-    ? route.meta.activePath
-    : findRouteByPath(parentRoutes, wholeMenus)?.children[0]?.path;
+  defaultActive.value = !isAllEmpty(route.meta?.activePath) ? route.meta.activePath : findRouteByPath(parentRoutes, wholeMenus)?.children[0]?.path;
 }
 
 onMounted(() => {
@@ -54,32 +42,12 @@ watch(
 </script>
 
 <template>
-  <div
-    v-if="device !== 'mobile'"
-    v-loading="usePermissionStoreHook().wholeMenus.length === 0"
-    class="horizontal-header"
-  >
-    <el-menu
-      ref="menuRef"
-      router
-      mode="horizontal"
-      popper-class="pure-scrollbar"
-      class="horizontal-header-menu"
-      :default-active="defaultActive"
-    >
-      <el-menu-item
-        v-for="route in usePermissionStoreHook().wholeMenus"
-        :key="route.path"
-        :index="resolvePath(route) || route.redirect"
-      >
+  <div v-if="device !== 'mobile'" v-loading="usePermissionStoreHook().wholeMenus.length === 0" class="horizontal-header">
+    <el-menu ref="menuRef" router mode="horizontal" popper-class="pure-scrollbar" class="horizontal-header-menu" :default-active="defaultActive">
+      <el-menu-item v-for="route in usePermissionStoreHook().wholeMenus" :key="route.path" :index="resolvePath(route) || route.redirect">
         <template #title>
-          <div
-            v-if="toRaw(route.meta.icon)"
-            :class="['sub-menu-icon', route.meta.icon]"
-          >
-            <component
-              :is="useRenderIcon(route.meta && toRaw(route.meta.icon))"
-            />
+          <div v-if="toRaw(route.meta.icon)" :class="['sub-menu-icon', route.meta.icon]">
+            <component :is="useRenderIcon(route.meta && toRaw(route.meta.icon))" />
           </div>
           <div :style="getDivStyle">
             <span class="select-none">
@@ -106,20 +74,13 @@ watch(
         <template #dropdown>
           <el-dropdown-menu class="logout">
             <el-dropdown-item @click="logout">
-              <IconifyIconOffline
-                :icon="LogoutCircleRLine"
-                style="margin: 5px"
-              />
+              <IconifyIconOffline :icon="LogoutCircleRLine" style="margin: 5px" />
               退出系统
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <span
-        class="set-icon navbar-bg-hover"
-        title="打开系统配置"
-        @click="onPanel"
-      >
+      <span class="set-icon navbar-bg-hover" title="打开系统配置" @click="onPanel">
         <IconifyIconOffline :icon="Setting" />
       </span>
     </div>

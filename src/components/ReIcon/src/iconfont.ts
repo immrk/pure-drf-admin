@@ -20,10 +20,7 @@ export default defineComponent({
         },
         this.icon
       );
-    } else if (
-      Object.keys(attrs).includes("svg") ||
-      attrs?.iconType === "svg"
-    ) {
+    } else if (Object.keys(attrs).includes("svg") || attrs?.iconType === "svg") {
       return h(
         "svg",
         {

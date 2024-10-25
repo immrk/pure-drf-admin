@@ -43,8 +43,7 @@ export const noticesData: TabItem[] = [
       {
         avatar: "https://xiaoxian521.github.io/hyperlink/svg/smile5.svg",
         title: "标题",
-        description:
-          "请将鼠标移动到此处，以便测试超长的消息在此处将如何处理。本例中设置的描述最大行数为2，超过2行的描述内容将被省略并且可以通过tooltip查看完整内容",
+        description: "请将鼠标移动到此处，以便测试超长的消息在此处将如何处理。本例中设置的描述最大行数为2，超过2行的描述内容将被省略并且可以通过tooltip查看完整内容",
         datetime: "时间",
         type: "2"
       }
@@ -58,8 +57,7 @@ export const noticesData: TabItem[] = [
       {
         avatar: "",
         title: "第三方紧急代码变更",
-        description:
-          "小林提交于 2024-05-10，需在 2024-05-11 前完成代码变更任务",
+        description: "小林提交于 2024-05-10，需在 2024-05-11 前完成代码变更任务",
         datetime: "",
         extra: "马上到期",
         status: "danger",

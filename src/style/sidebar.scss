@@ -208,9 +208,7 @@
     }
 
     /* 有子集的激活菜单左侧小竖条 */
-    .el-menu--collapse
-      .is-active.outer-most.el-sub-menu
-      > .el-sub-menu__title::before {
+    .el-menu--collapse .is-active.outer-most.el-sub-menu > .el-sub-menu__title::before {
       position: absolute;
       top: 0;
       left: 0;

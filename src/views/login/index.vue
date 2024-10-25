@@ -33,8 +33,8 @@ dataThemeChange(overallStyle.value);
 const { title } = useNav();
 
 const ruleForm = reactive({
-  username: "admin",
-  password: "admin123"
+  email: "",
+  password: ""
 });
 
 const onLogin = async (formEl: FormInstance | undefined) => {
@@ -43,11 +43,12 @@ const onLogin = async (formEl: FormInstance | undefined) => {
     if (valid) {
       loading.value = true;
       useUserStoreHook()
-        .loginByUsername({ username: ruleForm.username, password: "admin123" })
+        .loginByEmail({ email: ruleForm.email, password: ruleForm.password })
         .then(res => {
           if (res.success) {
             // 获取后端路由
             return initRouter().then(() => {
+              console.log("动态路由获取成功");
               router.push(getTopMenu(true).path).then(() => {
                 message("登录成功", { type: "success" });
               });
@@ -82,13 +83,7 @@ onBeforeUnmount(() => {
     <img :src="bg" class="wave" />
     <div class="flex-c absolute right-5 top-3">
       <!-- 主题 -->
-      <el-switch
-        v-model="dataTheme"
-        inline-prompt
-        :active-icon="dayIcon"
-        :inactive-icon="darkIcon"
-        @change="dataThemeChange"
-      />
+      <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange" />
     </div>
     <div class="login-container">
       <div class="img">
@@ -101,54 +96,30 @@ onBeforeUnmount(() => {
             <h2 class="outline-none">{{ title }}</h2>
           </Motion>
 
-          <el-form
-            ref="ruleFormRef"
-            :model="ruleForm"
-            :rules="loginRules"
-            size="large"
-          >
+          <el-form ref="ruleFormRef" :model="ruleForm" :rules="loginRules" size="large">
             <Motion :delay="100">
               <el-form-item
                 :rules="[
                   {
                     required: true,
-                    message: '请输入账号',
+                    message: '请输入邮箱',
                     trigger: 'blur'
                   }
                 ]"
-                prop="username"
+                prop="email"
               >
-                <el-input
-                  v-model="ruleForm.username"
-                  clearable
-                  placeholder="账号"
-                  :prefix-icon="useRenderIcon(User)"
-                />
+                <el-input v-model="ruleForm.email" clearable placeholder="邮箱账号" :prefix-icon="useRenderIcon(User)" />
               </el-form-item>
             </Motion>
 
             <Motion :delay="150">
               <el-form-item prop="password">
-                <el-input
-                  v-model="ruleForm.password"
-                  clearable
-                  show-password
-                  placeholder="密码"
-                  :prefix-icon="useRenderIcon(Lock)"
-                />
+                <el-input v-model="ruleForm.password" clearable show-password placeholder="密码" :prefix-icon="useRenderIcon(Lock)" />
               </el-form-item>
             </Motion>
 
             <Motion :delay="250">
-              <el-button
-                class="w-full mt-4"
-                size="default"
-                type="primary"
-                :loading="loading"
-                @click="onLogin(ruleFormRef)"
-              >
-                登录
-              </el-button>
+              <el-button class="w-full mt-4" size="default" type="primary" :loading="loading" @click="onLogin(ruleFormRef)"> 登录 </el-button>
             </Motion>
           </el-form>
         </div>

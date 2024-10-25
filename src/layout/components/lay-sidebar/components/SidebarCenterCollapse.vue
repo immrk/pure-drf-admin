@@ -42,11 +42,7 @@ const toggleClick = () => {
     class="center-collapse"
     @click="toggleClick"
   >
-    <IconifyIconOffline
-      :icon="ArrowLeft"
-      :class="[iconClass, themeColor === 'light' ? '' : 'text-primary']"
-      :style="{ transform: isActive ? 'none' : 'rotateY(180deg)' }"
-    />
+    <IconifyIconOffline :icon="ArrowLeft" :class="[iconClass, themeColor === 'light' ? '' : 'text-primary']" :style="{ transform: isActive ? 'none' : 'rotateY(180deg)' }" />
   </div>
 </template>
 

@@ -1,21 +1,7 @@
 import Sortable from "sortablejs";
 import { useEpThemeStoreHook } from "@/store/modules/epTheme";
-import {
-  type PropType,
-  ref,
-  unref,
-  computed,
-  nextTick,
-  defineComponent,
-  getCurrentInstance
-} from "vue";
-import {
-  delay,
-  cloneDeep,
-  isBoolean,
-  isFunction,
-  getKeyList
-} from "@pureadmin/utils";
+import { type PropType, ref, unref, computed, nextTick, defineComponent, getCurrentInstance } from "vue";
+import { delay, cloneDeep, isBoolean, isFunction, getKeyList } from "@pureadmin/utils";
 
 import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
 import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
@@ -62,11 +48,7 @@ export default defineComponent({
     const isIndeterminate = ref(false);
     const instance = getCurrentInstance()!;
     const isExpandAll = ref(props.isExpandAll);
-    const filterColumns = cloneDeep(props?.columns).filter(column =>
-      isBoolean(column?.hide)
-        ? !column.hide
-        : !(isFunction(column?.hide) && column?.hide())
-    );
+    const filterColumns = cloneDeep(props?.columns).filter(column => (isBoolean(column?.hide) ? !column.hide : !(isFunction(column?.hide) && column?.hide())));
     let checkColumnList = getKeyList(cloneDeep(props?.columns), "label");
     const checkedColumns = ref(getKeyList(cloneDeep(filterColumns), "label"));
     const dynamicColumns = ref(cloneDeep(props?.columns));
@@ -74,35 +56,18 @@ export default defineComponent({
     const getDropdownItemStyle = computed(() => {
       return s => {
         return {
-          background:
-            s === size.value ? useEpThemeStoreHook().epThemeColor : "",
+          background: s === size.value ? useEpThemeStoreHook().epThemeColor : "",
           color: s === size.value ? "#fff" : "var(--el-text-color-primary)"
         };
       };
     });
 
     const iconClass = computed(() => {
-      return [
-        "text-black",
-        "dark:text-white",
-        "duration-100",
-        "hover:!text-primary",
-        "cursor-pointer",
-        "outline-none"
-      ];
+      return ["text-black", "dark:text-white", "duration-100", "hover:!text-primary", "cursor-pointer", "outline-none"];
     });
 
     const topClass = computed(() => {
-      return [
-        "flex",
-        "justify-between",
-        "pt-[3px]",
-        "px-[11px]",
-        "border-b-[1px]",
-        "border-solid",
-        "border-[#dcdfe6]",
-        "dark:border-[#303030]"
-      ];
+      return ["flex", "justify-between", "pt-[3px]", "px-[11px]", "border-b-[1px]", "border-solid", "border-[#dcdfe6]", "dark:border-[#303030]"];
     });
 
     function onReFresh() {
@@ -128,17 +93,14 @@ export default defineComponent({
     function handleCheckAllChange(val: boolean) {
       checkedColumns.value = val ? checkColumnList : [];
       isIndeterminate.value = false;
-      dynamicColumns.value.map(column =>
-        val ? (column.hide = false) : (column.hide = true)
-      );
+      dynamicColumns.value.map(column => (val ? (column.hide = false) : (column.hide = true)));
     }
 
     function handleCheckedColumnsChange(value: string[]) {
       checkedColumns.value = value;
       const checkedCount = value.length;
       checkAll.value = checkedCount === checkColumnList.length;
-      isIndeterminate.value =
-        checkedCount > 0 && checkedCount < checkColumnList.length;
+      isIndeterminate.value = checkedCount > 0 && checkedCount < checkColumnList.length;
     }
 
     function handleCheckColumnListChange(val: boolean, label: string) {
@@ -157,22 +119,13 @@ export default defineComponent({
     const dropdown = {
       dropdown: () => (
         <el-dropdown-menu class="translation">
-          <el-dropdown-item
-            style={getDropdownItemStyle.value("large")}
-            onClick={() => (size.value = "large")}
-          >
+          <el-dropdown-item style={getDropdownItemStyle.value("large")} onClick={() => (size.value = "large")}>
             宽松
           </el-dropdown-item>
-          <el-dropdown-item
-            style={getDropdownItemStyle.value("default")}
-            onClick={() => (size.value = "default")}
-          >
+          <el-dropdown-item style={getDropdownItemStyle.value("default")} onClick={() => (size.value = "default")}>
             默认
           </el-dropdown-item>
-          <el-dropdown-item
-            style={getDropdownItemStyle.value("small")}
-            onClick={() => (size.value = "small")}
-          >
+          <el-dropdown-item style={getDropdownItemStyle.value("small")} onClick={() => (size.value = "small")}>
             紧凑
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -183,9 +136,7 @@ export default defineComponent({
     const rowDrop = (event: { preventDefault: () => void }) => {
       event.preventDefault();
       nextTick(() => {
-        const wrapper: HTMLElement = (
-          instance?.proxy?.$refs[`GroupRef${unref(props.tableKey)}`] as any
-        ).$el.firstElementChild;
+        const wrapper: HTMLElement = (instance?.proxy?.$refs[`GroupRef${unref(props.tableKey)}`] as any).$el.firstElementChild;
         Sortable.create(wrapper, {
           animation: 300,
           handle: ".drag-btn",
@@ -200,10 +151,7 @@ export default defineComponent({
               if (newIndex > oldIndex) {
                 wrapperElem.insertBefore(targetThElem, oldThElem);
               } else {
-                wrapperElem.insertBefore(
-                  targetThElem,
-                  oldThElem ? oldThElem.nextElementSibling : oldThElem
-                );
+                wrapperElem.insertBefore(targetThElem, oldThElem ? oldThElem.nextElementSibling : oldThElem);
               }
               return;
             }
@@ -215,9 +163,7 @@ export default defineComponent({
     };
 
     const isFixedColumn = (label: string) => {
-      return dynamicColumns.value.filter(item => item.label === label)[0].fixed
-        ? true
-        : false;
+      return dynamicColumns.value.filter(item => item.label === label)[0].fixed ? true : false;
     };
 
     const rendTippyProps = (content: string) => {
@@ -232,38 +178,16 @@ export default defineComponent({
     };
 
     const reference = {
-      reference: () => (
-        <SettingIcon
-          class={["w-[16px]", iconClass.value]}
-          v-tippy={rendTippyProps("列设置")}
-        />
-      )
+      reference: () => <SettingIcon class={["w-[16px]", iconClass.value]} v-tippy={rendTippyProps("列设置")} />
     };
 
     return () => (
       <>
-        <div
-          {...attrs}
-          class={[
-            "w-[99/100]",
-            "px-2",
-            "pb-2",
-            "bg-bg_color",
-            isFullscreen.value
-              ? ["!w-full", "!h-full", "z-[2002]", "fixed", "inset-0"]
-              : "mt-2"
-          ]}
-        >
+        <div {...attrs} class={["w-[99/100]", "px-2", "pb-2", "bg-bg_color", isFullscreen.value ? ["!w-full", "!h-full", "z-[2002]", "fixed", "inset-0"] : "mt-2"]}>
           <div class="flex justify-between w-full h-[60px] p-4">
-            {slots?.title ? (
-              slots.title()
-            ) : (
-              <p class="font-bold truncate">{props.title}</p>
-            )}
+            {slots?.title ? slots.title() : <p class="font-bold truncate">{props.title}</p>}
             <div class="flex items-center justify-around">
-              {slots?.buttons ? (
-                <div class="flex mr-4">{slots.buttons()}</div>
-              ) : null}
+              {slots?.buttons ? <div class="flex mr-4">{slots.buttons()}</div> : null}
               {props.tableRef?.size ? (
                 <>
                   <ExpandIcon
@@ -271,48 +195,22 @@ export default defineComponent({
                     style={{
                       transform: isExpandAll.value ? "none" : "rotate(-90deg)"
                     }}
-                    v-tippy={rendTippyProps(
-                      isExpandAll.value ? "折叠" : "展开"
-                    )}
+                    v-tippy={rendTippyProps(isExpandAll.value ? "折叠" : "展开")}
                     onClick={() => onExpand()}
                   />
                   <el-divider direction="vertical" />
                 </>
               ) : null}
-              <RefreshIcon
-                class={[
-                  "w-[16px]",
-                  iconClass.value,
-                  loading.value ? "animate-spin" : ""
-                ]}
-                v-tippy={rendTippyProps("刷新")}
-                onClick={() => onReFresh()}
-              />
+              <RefreshIcon class={["w-[16px]", iconClass.value, loading.value ? "animate-spin" : ""]} v-tippy={rendTippyProps("刷新")} onClick={() => onReFresh()} />
               <el-divider direction="vertical" />
-              <el-dropdown
-                v-slots={dropdown}
-                trigger="click"
-                v-tippy={rendTippyProps("密度")}
-              >
+              <el-dropdown v-slots={dropdown} trigger="click" v-tippy={rendTippyProps("密度")}>
                 <CollapseIcon class={["w-[16px]", iconClass.value]} />
               </el-dropdown>
               <el-divider direction="vertical" />
 
-              <el-popover
-                v-slots={reference}
-                placement="bottom-start"
-                popper-style={{ padding: 0 }}
-                width="200"
-                trigger="click"
-              >
+              <el-popover v-slots={reference} placement="bottom-start" popper-style={{ padding: 0 }} width="200" trigger="click">
                 <div class={[topClass.value]}>
-                  <el-checkbox
-                    class="!-mr-1"
-                    label="列展示"
-                    v-model={checkAll.value}
-                    indeterminate={isIndeterminate.value}
-                    onChange={value => handleCheckAllChange(value)}
-                  />
+                  <el-checkbox class="!-mr-1" label="列展示" v-model={checkAll.value} indeterminate={isIndeterminate.value} onChange={value => handleCheckAllChange(value)} />
                   <el-button type="primary" link onClick={() => onReset()}>
                     重置
                   </el-button>
@@ -320,42 +218,14 @@ export default defineComponent({
 
                 <div class="pt-[6px] pl-[11px]">
                   <el-scrollbar max-height="36vh">
-                    <el-checkbox-group
-                      ref={`GroupRef${unref(props.tableKey)}`}
-                      modelValue={checkedColumns.value}
-                      onChange={value => handleCheckedColumnsChange(value)}
-                    >
-                      <el-space
-                        direction="vertical"
-                        alignment="flex-start"
-                        size={0}
-                      >
+                    <el-checkbox-group ref={`GroupRef${unref(props.tableKey)}`} modelValue={checkedColumns.value} onChange={value => handleCheckedColumnsChange(value)}>
+                      <el-space direction="vertical" alignment="flex-start" size={0}>
                         {checkColumnList.map((item, index) => {
                           return (
                             <div class="flex items-center">
-                              <DragIcon
-                                class={[
-                                  "drag-btn w-[16px] mr-2",
-                                  isFixedColumn(item)
-                                    ? "!cursor-no-drop"
-                                    : "!cursor-grab"
-                                ]}
-                                onMouseenter={(event: {
-                                  preventDefault: () => void;
-                                }) => rowDrop(event)}
-                              />
-                              <el-checkbox
-                                key={index}
-                                label={item}
-                                value={item}
-                                onChange={value =>
-                                  handleCheckColumnListChange(value, item)
-                                }
-                              >
-                                <span
-                                  title={item}
-                                  class="inline-block w-[120px] truncate hover:text-text_color_primary"
-                                >
+                              <DragIcon class={["drag-btn w-[16px] mr-2", isFixedColumn(item) ? "!cursor-no-drop" : "!cursor-grab"]} onMouseenter={(event: { preventDefault: () => void }) => rowDrop(event)} />
+                              <el-checkbox key={index} label={item} value={item} onChange={value => handleCheckColumnListChange(value, item)}>
+                                <span title={item} class="inline-block w-[120px] truncate hover:text-text_color_primary">
                                   {item}
                                 </span>
                               </el-checkbox>
@@ -369,12 +239,7 @@ export default defineComponent({
               </el-popover>
               <el-divider direction="vertical" />
 
-              <iconifyIconOffline
-                class={["w-[16px]", iconClass.value]}
-                icon={isFullscreen.value ? ExitFullscreen : Fullscreen}
-                v-tippy={isFullscreen.value ? "退出全屏" : "全屏"}
-                onClick={() => (isFullscreen.value = !isFullscreen.value)}
-              />
+              <iconifyIconOffline class={["w-[16px]", iconClass.value]} icon={isFullscreen.value ? ExitFullscreen : Fullscreen} v-tippy={isFullscreen.value ? "退出全屏" : "全屏"} onClick={() => (isFullscreen.value = !isFullscreen.value)} />
             </div>
           </div>
           {slots.default({

@@ -1,22 +1,8 @@
 import "./index.css";
 import type { OptionsType } from "./type";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import {
-  useDark,
-  isNumber,
-  isFunction,
-  useResizeObserver
-} from "@pureadmin/utils";
-import {
-  type PropType,
-  h,
-  ref,
-  toRef,
-  watch,
-  nextTick,
-  defineComponent,
-  getCurrentInstance
-} from "vue";
+import { useDark, isNumber, isFunction, useResizeObserver } from "@pureadmin/utils";
+import { type PropType, h, ref, toRef, watch, nextTick, defineComponent, getCurrentInstance } from "vue";
 
 const props = {
   options: {
@@ -62,16 +48,12 @@ export default defineComponent({
     const curMouseActive = ref(-1);
     const segmentedItembg = ref("");
     const instance = getCurrentInstance()!;
-    const curIndex = isNumber(props.modelValue)
-      ? toRef(props, "modelValue")
-      : ref(0);
+    const curIndex = isNumber(props.modelValue) ? toRef(props, "modelValue") : ref(0);
 
     function handleChange({ option, index }, event: Event) {
       if (props.disabled || option.disabled) return;
       event.preventDefault();
-      isNumber(props.modelValue)
-        ? emit("update:modelValue", index)
-        : (curIndex.value = index);
+      isNumber(props.modelValue) ? emit("update:modelValue", index) : (curIndex.value = index);
       segmentedItembg.value = "";
       emit("change", { index, option });
     }
@@ -83,9 +65,7 @@ export default defineComponent({
       if (option.disabled || curIndex.value === index) {
         segmentedItembg.value = "";
       } else {
-        segmentedItembg.value = isDark.value
-          ? "#1f1f1f"
-          : "rgba(0, 0, 0, 0.06)";
+        segmentedItembg.value = isDark.value ? "#1f1f1f" : "rgba(0, 0, 0, 0.06)";
       }
     }
 
@@ -136,22 +116,10 @@ export default defineComponent({
         return (
           <label
             ref={`labelRef${index}`}
-            class={[
-              "pure-segmented-item",
-              (props.disabled || option?.disabled) &&
-                "pure-segmented-item-disabled"
-            ]}
+            class={["pure-segmented-item", (props.disabled || option?.disabled) && "pure-segmented-item-disabled"]}
             style={{
-              background:
-                curMouseActive.value === index ? segmentedItembg.value : "",
-              color: props.disabled
-                ? null
-                : !option.disabled &&
-                    (curIndex.value === index || curMouseActive.value === index)
-                  ? isDark.value
-                    ? "rgba(255, 255, 255, 0.85)"
-                    : "rgba(0,0,0,.88)"
-                  : ""
+              background: curMouseActive.value === index ? segmentedItembg.value : "",
+              color: props.disabled ? null : !option.disabled && (curIndex.value === index || curMouseActive.value === index) ? (isDark.value ? "rgba(255, 255, 255, 0.85)" : "rgba(0,0,0,.88)") : ""
             }}
             onMouseenter={event => handleMouseenter({ option, index }, event)}
             onMouseleave={event => handleMouseleave({ option, index }, event)}
@@ -166,10 +134,7 @@ export default defineComponent({
               }}
             >
               {option.icon && !isFunction(option.label) ? (
-                <span
-                  class="pure-segmented-item-icon"
-                  style={{ marginRight: option.label ? "6px" : 0 }}
-                >
+                <span class="pure-segmented-item-icon" style={{ marginRight: option.label ? "6px" : 0 }}>
                   {h(
                     useRenderIcon(option.icon, {
                       ...option?.iconAttrs
@@ -177,13 +142,7 @@ export default defineComponent({
                   )}
                 </span>
               ) : null}
-              {option.label ? (
-                isFunction(option.label) ? (
-                  h(option.label)
-                ) : (
-                  <span>{option.label}</span>
-                )
-              ) : null}
+              {option.label ? isFunction(option.label) ? h(option.label) : <span>{option.label}</span> : null}
             </div>
           </label>
         );

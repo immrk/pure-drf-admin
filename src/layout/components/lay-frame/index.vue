@@ -14,11 +14,7 @@ const compList = shallowRef([]);
 const { setMap, getMap, MAP, delMap } = useMultiFrame();
 
 const keep = computed(() => {
-  return (
-    getConfig().KeepAlive &&
-    props.currRoute.meta?.keepAlive &&
-    !!props.currRoute.meta?.frameSrc
-  );
+  return getConfig().KeepAlive && props.currRoute.meta?.keepAlive && !!props.currRoute.meta?.frameSrc;
 });
 // 避免重新渲染 LayFrame
 const normalComp = computed(() => !keep.value && props.currComp);
@@ -66,11 +62,7 @@ watch(
 <template>
   <template v-for="[fullPath, Comp] in compList" :key="fullPath">
     <div v-show="fullPath === currRoute.fullPath" class="w-full h-full">
-      <slot
-        :fullPath="fullPath"
-        :Comp="Comp"
-        :frameInfo="{ frameSrc: currRoute.meta?.frameSrc, fullPath }"
-      />
+      <slot :fullPath="fullPath" :Comp="Comp" :frameInfo="{ frameSrc: currRoute.meta?.frameSrc, fullPath }" />
     </div>
   </template>
   <div v-show="!keep" class="w-full h-full">

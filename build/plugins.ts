@@ -15,10 +15,7 @@ import { themePreprocessorPlugin } from "@pureadmin/theme";
 import { genScssMultipleScopeVars } from "../src/layout/theme";
 import { vitePluginFakeServer } from "vite-plugin-fake-server";
 
-export function getPluginsList(
-  VITE_CDN: boolean,
-  VITE_COMPRESSION: ViteCompression
-): PluginOption[] {
+export function getPluginsList(VITE_CDN: boolean, VITE_COMPRESSION: ViteCompression): PluginOption[] {
   const lifecycle = process.env.npm_lifecycle_event;
   return [
     vue(),
@@ -64,8 +61,6 @@ export function getPluginsList(
     // 线上环境删除console
     removeConsole({ external: ["src/assets/iconfont/iconfont.js"] }),
     // 打包分析
-    lifecycle === "report"
-      ? visualizer({ open: true, brotliSize: true, filename: "report.html" })
-      : (null as any)
+    lifecycle === "report" ? visualizer({ open: true, brotliSize: true, filename: "report.html" }) : (null as any)
   ];
 }

@@ -46,10 +46,7 @@ function init() {
 watch(
   () => currentRoute.fullPath,
   path => {
-    if (
-      currentRoute.name === "Redirect" &&
-      path.includes(props.frameInfo?.fullPath)
-    ) {
+    if (currentRoute.name === "Redirect" && path.includes(props.frameInfo?.fullPath)) {
       frameSrc.value = path; // redirect时，置换成任意值，待重定向后 重新赋值
       loading.value = true;
     }

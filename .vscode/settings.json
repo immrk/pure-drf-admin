@@ -29,5 +29,8 @@
   },
   "iconify.excludes": ["el"],
   "vscodeCustomCodeColor.highlightValue": ["v-loading", "v-auth", "v-copy", "v-longpress", "v-optimize", "v-perms", "v-ripple"],
-  "vscodeCustomCodeColor.highlightValueColor": "#b392f0"
+  "vscodeCustomCodeColor.highlightValueColor": "#b392f0",
+  "i18n-ally.localesPaths": [
+    "locales"
+  ]
 }

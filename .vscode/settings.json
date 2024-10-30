@@ -7,7 +7,6 @@
   "editor.tabSize": 2,
   "editor.formatOnPaste": true,
   "editor.guides.bracketPairs": "active",
-  "files.autoSave": "afterDelay",
   "git.confirmSync": false,
   "workbench.startupEditor": "newUntitledFile",
   "editor.suggestSelection": "first",
@@ -30,7 +29,5 @@
   "iconify.excludes": ["el"],
   "vscodeCustomCodeColor.highlightValue": ["v-loading", "v-auth", "v-copy", "v-longpress", "v-optimize", "v-perms", "v-ripple"],
   "vscodeCustomCodeColor.highlightValueColor": "#b392f0",
-  "i18n-ally.localesPaths": [
-    "locales"
-  ]
+  "i18n-ally.localesPaths": ["locales"]
 }

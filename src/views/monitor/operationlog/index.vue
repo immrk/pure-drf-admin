@@ -35,9 +35,75 @@
         </el-table-column>
         <el-table-column prop="response_code" label="响应代码" align="center" />
         <el-table-column prop="create_time" label="操作时间" align="center" min-width="150px" />
+        <el-table-column fixed="right" label="操作" align="center">
+          <template #default="scope">
+            <el-link type="primary" @click="showdetail(scope.row)">详情</el-link>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination v-model:current-page="form.page" v-model:page-size="form.size" :page-sizes="[10, 20, 30, 50]" layout="total, sizes, prev, pager, next, jumper" :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
     </div>
+    <!-- 详情弹窗 -->
+    <el-dialog v-model="detailVisible" title="操作日志详情" width="50%" center>
+      <!-- 绘制一个左右两列的表格样式，显示请求数据 -->
+      <el-row>
+        <el-col :span="12">
+          <el-form label-width="100px">
+            <el-form-item label="操作用户：" :label-width="null">
+              <el-input v-model="rowdetail.creator" disabled />
+            </el-form-item>
+            <el-form-item label="IP地址：" :label-width="null">
+              <el-input v-model="rowdetail.request_ip" disabled />
+            </el-form-item>
+            <el-form-item label="请求方法：" :label-width="null">
+              <el-input v-model="rowdetail.request_method" disabled />
+            </el-form-item>
+            <el-form-item label="请求模块：" :label-width="null">
+              <el-input v-model="rowdetail.request_modular" disabled />
+            </el-form-item>
+            <el-form-item label="请求路径：" :label-width="null">
+              <el-input v-model="rowdetail.request_path" disabled />
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="12">
+          <el-form label-width="100px">
+            <el-form-item label="系统：" :label-width="null">
+              <el-input v-model="rowdetail.request_os" disabled />
+            </el-form-item>
+            <el-form-item label="浏览器：" :label-width="null">
+              <el-input v-model="rowdetail.request_browser" disabled />
+            </el-form-item>
+            <el-form-item label="状态：" :label-width="null">
+              <el-input v-model="rowdetail.status" disabled />
+            </el-form-item>
+            <el-form-item label="响应代码：" :label-width="null">
+              <el-input v-model="rowdetail.response_code" disabled />
+            </el-form-item>
+            <el-form-item label="操作时间：" :label-width="null">
+              <el-input v-model="rowdetail.create_time" disabled />
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+      <!-- 绘制横向布局的两个json显示框，分别显示请求内容和响应内容 -->
+      <el-row>
+        <el-col :span="12">
+          <el-form label-width="100px">
+            <el-form-item label="请求内容：" :label-width="null">
+              <el-input v-model="rowdetail.request_content" type="textarea" disabled />
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="12">
+          <el-form label-width="100px">
+            <el-form-item label="响应内容：" :label-width="null">
+              <el-input v-model="rowdetail.response_content" type="textarea" disabled />
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </el-dialog>
   </div>
 </template>
 
@@ -47,12 +113,15 @@ import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { getOperationlog, deleteAllOperationlog } from "@/api/monitor";
 import { message } from "@/utils/message";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { object } from "vue-types";
 
 defineOptions({
   name: "usermanage"
 });
 
 const formRef = ref(null);
+const detailVisible = ref(false);
+const rowdetail = ref(null);
 
 // 筛选过滤器数据
 const form = reactive({
@@ -111,6 +180,12 @@ const clearall = () => {
       message(res.msg, { type: "success" });
     });
   });
+};
+
+// 显示详情
+const showdetail = row => {
+  rowdetail.value = row;
+  detailVisible.value = true;
 };
 
 // 计算表格高度的函数

@@ -75,7 +75,8 @@
               <el-input v-model="rowdetail.request_browser" disabled />
             </el-form-item>
             <el-form-item label="状态：" :label-width="null">
-              <el-input v-model="rowdetail.status" disabled />
+              <!-- <el-input v-model="rowdetail.status" disabled /> -->
+              <el-tag :type="rowdetail.status ? 'success' : 'danger'">{{ rowdetail.status ? "成功" : "失败" }}</el-tag>
             </el-form-item>
             <el-form-item label="响应代码：" :label-width="null">
               <el-input v-model="rowdetail.response_code" disabled />
@@ -91,14 +92,14 @@
         <el-col :span="12">
           <el-form label-width="100px">
             <el-form-item label="请求内容：" :label-width="null">
-              <el-input v-model="rowdetail.request_content" type="textarea" disabled />
+              <vue-json-pretty showLineNumber :deep="1" :data="rowdetail.request_body" class="jsoncontainer" />
             </el-form-item>
           </el-form>
         </el-col>
         <el-col :span="12">
           <el-form label-width="100px">
             <el-form-item label="响应内容：" :label-width="null">
-              <el-input v-model="rowdetail.response_content" type="textarea" disabled />
+              <vue-json-pretty showLineNumber :deep="1" :data="rowdetail.json_result" class="jsoncontainer" />
             </el-form-item>
           </el-form>
         </el-col>
@@ -113,7 +114,8 @@ import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { getOperationlog, deleteAllOperationlog } from "@/api/monitor";
 import { message } from "@/utils/message";
 import { ElMessage, ElMessageBox } from "element-plus";
-import { object } from "vue-types";
+import VueJsonPretty from "vue-json-pretty";
+import "vue-json-pretty/lib/styles.css";
 
 defineOptions({
   name: "usermanage"
@@ -262,5 +264,19 @@ onBeforeUnmount(() => {
   display: flex;
   gap: 10px;
   justify-content: center;
+}
+
+.jsoncontainer {
+  max-height: 300px;
+  width: 100%;
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid #ebeef5;
+  border-radius: 4px;
+  background-color: #f5f7fa;
+  margin: 10px;
+  .json-pretty {
+    font-size: 12px;
+  }
 }
 </style>

@@ -109,11 +109,12 @@ const isEditMode = ref(false);
 const selectedUser = ref({});
 
 // 编辑/新增 用户 数据过滤函数
-function userFilter(data) {
-  console.log("userFilter", data.password);
-
+function userFilter(method, data) {
   delete data.id;
   delete data.dept_name;
+  if (method === "update") {
+    delete data.last_login;
+  }
   // 上传时将各种类型空值转化成NaN
   data = Object.fromEntries(
     Object.entries(data).map(([key, value]) => {
@@ -144,7 +145,7 @@ function userFilter(data) {
 const handleSave = (method, data) => {
   // 根据method判断是新增还是编辑
   if (method === "create") {
-    const newdata = userFilter(data);
+    const newdata = userFilter(method, data);
     console.log("新增用户", method, newdata);
     postUser(newdata)
       .then(res => {
@@ -158,7 +159,7 @@ const handleSave = (method, data) => {
   } else {
     // 编辑用户
     const id = data.id;
-    const newdata = userFilter(data);
+    const newdata = userFilter(method, data);
     console.log("更新用户", method, newdata);
     patchUser(id, newdata)
       .then(res => {

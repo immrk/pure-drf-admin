@@ -13,8 +13,8 @@
       <el-form-item :label="props.isEditMode ? '重设密码' : '设置密码'" prop="password">
         <el-input v-model="userData.password" type="password" />
       </el-form-item>
-      <el-form-item label="所属用户" prop="dept">
-        <el-cascader v-model="userData.dept" :options="deptData" :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true }" clearable filterable placeholder="无所属用户" />
+      <el-form-item label="所属部门" prop="dept">
+        <el-cascader v-model="userData.dept" :options="deptData" :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true }" clearable filterable placeholder="无所属部门" />
       </el-form-item>
       <el-form-item label="分配角色" prop="role">
         <el-cascader v-model="userData.role" :options="rolesData" :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, multiple: true }" clearable filterable placeholder="未分配角色" />

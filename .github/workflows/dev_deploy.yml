@@ -20,11 +20,17 @@ jobs:
           node-version: "20"
           cache: "pnpm"
 
-      # 使用pnpm安装依赖并打包项目
-      - name: Build
+      # 安装pnpm
+      - name: Install pnpm
         run: npm install -g pnpm
-          pnpm install
-          pnpm run build
+
+      # 安装依赖
+      - name: Install dependencies
+        run: pnpm install
+
+      # 打包
+      - name: Build
+        run: pnpm run build
 
       # 将dist文件夹下打包好的内容上传并覆盖已有文件名
       - name: Upload files

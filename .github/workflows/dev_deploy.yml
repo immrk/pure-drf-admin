@@ -1,0 +1,31 @@
+name: Dev_Deploy
+
+# 触发条件：当 dev 分支有 push 时
+on:
+  push:
+    branches: ["dev"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 设置node.js环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      # 使用pnpm安装依赖并打包项目
+      - name: Build
+        run: npm install -g pnpm
+          pnpm install
+          pnpm run build
+
+      # 将dist文件夹下打包好的内容上传并覆盖已有文件名
+      - name: Upload files
+        run: sshpass -p ${{ secrets.HOST_USER_PASSWORD }} scp -r -o StrictHostKeyChecking=no ./dist/* ${{ vars.HOST_USER_NAME }}@${{ vars.HOST}}:${{ vars.DEPLOY_PATH }}

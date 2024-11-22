@@ -18,7 +18,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "pnpm"
 
       # 安装pnpm
       - name: Install pnpm
@@ -30,7 +29,7 @@ jobs:
 
       # 打包
       - name: Build
-        run: pnpm run build
+        run: pnpm build
 
       # 将dist文件夹下打包好的内容上传并覆盖已有文件名
       - name: Upload files

@@ -6,7 +6,7 @@ export default defineUserConfig({
   title: "PureDRF",
   bundler: viteBundler(),
   theme: defaultTheme({
-    // 默认主题配置
+    // 导航栏
     navbar: [
       {
         text: "首页",
@@ -14,8 +14,27 @@ export default defineUserConfig({
       },
       {
         text: "开发文档",
-        link: "/devdoc"
+        prefix: "/devdoc/",
+        children: ["introduction.md", "quickstart.md"]
+      },
+      {
+        text: "前端代码",
+        link: "https://github.com/immrk/pure-drf-admin"
+      },
+      {
+        text: "后端代码",
+        link: "https://github.com/immrk/pure-drf-admin-backend"
       }
-    ]
+    ],
+    sidebar: {
+      "/devdoc/": [
+        {
+          text: "开发文档",
+          // 相对路径会自动追加子路径前缀
+          children: ["introduction.md", "quickstart.md"]
+        }
+      ],
+      "/reference/": "heading"
+    }
   })
 });

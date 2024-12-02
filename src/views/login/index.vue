@@ -82,6 +82,9 @@ onBeforeUnmount(() => {
   <div class="select-none">
     <img :src="bg" class="wave" />
     <div class="flex-c absolute right-5 top-3">
+      <a href="/docs" target="_blank" rel="noopener noreferrer">
+        <el-button style="margin-right: 10px" :icon="useRenderIcon('ep:document')"> 开发文档 </el-button>
+      </a>
       <!-- 主题 -->
       <el-switch v-model="dataTheme" inline-prompt :active-icon="dayIcon" :inactive-icon="darkIcon" @change="dataThemeChange" />
     </div>

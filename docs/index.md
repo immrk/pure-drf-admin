@@ -1,7 +1,7 @@
 ---
 home: true
 lang: zh-CN
-heroImage: /static/logo.svg
+heroImage: /images/logo.svg
 heroText: PureDRF
 tagline: 高效构建RABC后台管理系统
 actions:

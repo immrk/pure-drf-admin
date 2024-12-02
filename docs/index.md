@@ -6,7 +6,7 @@ heroText: PureDRF
 tagline: 高效构建RABC后台管理系统
 actions:
   - text: 快速上手
-    link: /quickstart.html
+    link: /devdoc/quickstart.html
     type: primary
   - text: 项目简介
     link: /devdoc/introduction.html

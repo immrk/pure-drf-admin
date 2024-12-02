@@ -4,6 +4,9 @@ import { defineUserConfig } from "vuepress";
 
 export default defineUserConfig({
   title: "PureDRF",
+  lang: "zh-CN",
+  dest: "dist/docs",
+  base: "/docs/",
   bundler: viteBundler(),
   theme: defaultTheme({
     // 导航栏

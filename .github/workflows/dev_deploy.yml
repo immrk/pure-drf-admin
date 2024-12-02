@@ -27,9 +27,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # 打包
+      # 打包vue项目
       - name: Build
         run: pnpm build
+      
+      # 打包vuepress文档项目
+      - name: Build docs
+        run: pnpm docs:build
 
       # 将dist文件夹下打包好的内容上传并覆盖已有文件名
       - name: Upload files

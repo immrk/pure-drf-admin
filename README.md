@@ -1,51 +1,44 @@
-<h1>vue-pure-admin精简版（非国际化版本）</h1>
+<h1>Pure-drf 开源RBAC后台管理系统</h1>
+
+*该页为前端代码，后端项目请前往[后端代码：pure-drf-admin-backend](https://github.com/immrk/pure-drf-admin-backend)*
 
 [![license](https://img.shields.io/github/license/pure-admin/vue-pure-admin.svg)](LICENSE)
 
-**中文** | [English](./README.en-US.md)
-
 ## 介绍
 
-精简版是基于 [vue-pure-admin](https://github.com/pure-admin/vue-pure-admin) 提炼出的架子，包含主体功能，更适合实际项目开发，打包后的大小在全局引入 [element-plus](https://element-plus.org) 的情况下仍然低于 `2.3MB`，并且会永久同步完整版的代码。开启 `brotli` 压缩和 `cdn` 替换本地库模式后，打包大小低于 `350kb`
+Pure drf 是一个使用Vue作为前端、Django(DRF)作为后端的RBAC开源管理后台框架
 
-## 版本选择
+- **拥有完整的部门、角色、权限、用户、日志管理模块；**
+- **完善的前后端鉴权机制包括：**
+  前端权限：动态路由、 组件、按钮；
+  后端权限： 接口鉴权（中间件自动判断 / 装饰器手动包裹）
 
-当前是非国际化版本，如果您需要国际化版本 [请点击](https://github.com/pure-admin/pure-admin-thin/tree/i18n)
-
-## `js` 版本
-
-[点我查看 js 版本](https://pure-admin.github.io/pure-admin-doc/pages/js/)
-
-## `max` 版本
-
-[点我查看 max 版本](https://github.com/pure-admin/vue-pure-admin-max)
-
-## 配套视频
-
-[点我查看 UI 设计](https://www.bilibili.com/video/BV17g411T7rq)  
-[点我查看快速开发教程](https://www.bilibili.com/video/BV1kg411v7QT)
-
-## 配套保姆级文档
-
-[点我查看 vue-pure-admin 文档](https://pure-admin.github.io/pure-admin-doc)  
-[点我查看 @pureadmin/utils 文档](https://pure-admin-utils.netlify.app)
-
-## 优质服务、软件外包、赞助支持
-
-[点我查看详情](https://pure-admin.github.io/pure-admin-doc/pages/service/)
+* [前端代码：pure-drf-admin](https://github.com/immrk/pure-drf-admin) ：前端代码基于[Pure admin](https://pure-admin.cn/) 开源前端框架二次开发，以适配DRF后端需求，前端代码fork同步[vue-pure-admin官方精简版](https://github.com/pure-admin/pure-admin-thin)
+* [后端代码：pure-drf-admin-backend](https://github.com/immrk/pure-drf-admin-backend)： 后端代码采用标准化drf文件结构开发，包含redis、MySQL、docker部署等
 
 ## 预览
 
-[查看预览](https://pure-admin-thin.netlify.app/#/login)
+[点击前往预览➡️](https://puredrf.kworlds.cn)
+预览账号: user@kworlds.cn
+账号密码：k12345678
+
+
+
+## 配套开发文档
+
+[点我查看 PureDRF 文档➡️](https://puredrf.kworlds.cn/docs/)
+
 
 ## 维护者
 
-[xiaoxian521](https://github.com/xiaoxian521)
+[RoyKe](https://github.com/immrk)
 
-## ⚠️ 注意
+## 合作联系
 
-精简版不接受任何 `issues` 和 `pr`，如果有问题请到完整版 [issues](https://github.com/pure-admin/vue-pure-admin/issues/new/choose) 去提，谢谢！
+keyajian@gmail.com
+注明标题：puredrf合作邮件
 
 ## 许可证
 
-[MIT © 2020-present, pure-admin](./LICENSE)
+[MIT © 2024-present, puredrf](./LICENSE)
+

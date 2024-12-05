@@ -5,3 +5,4 @@ if [[ $VERCEL_ENV == "production"  ]] ; then
   pnpm build && pnpm docs:build
 else 
   pnpm build:staging && pnpm docs:build
+fi

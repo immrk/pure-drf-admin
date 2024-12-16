@@ -155,7 +155,6 @@ function initRouter() {
         getAsyncRoutes().then(({ data }) => {
           // 将数据转化为树形数据
           data = handleTree(data, "id", "parent", "children");
-          console.log("已处理动态路由: ", data);
           handleAsyncRoutes(cloneDeep(data));
           storageLocal().setItem(key, data);
           resolve(router);
@@ -167,7 +166,6 @@ function initRouter() {
       getAsyncRoutes().then(({ data }) => {
         // 将数据转化为树形数据
         data = handleTree(data, "id", "parent", "children");
-        console.log("已处理动态路由: ", data);
         handleAsyncRoutes(cloneDeep(data));
         resolve(router);
       });

@@ -2,7 +2,7 @@
 home: true
 lang: zh-CN
 heroImage: /images/logo.svg
-heroText: PureDRF
+heroText: Pure-Drf-Admin
 tagline: 高效构建RABC后台管理系统
 actions:
   - text: 快速上手

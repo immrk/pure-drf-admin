@@ -53,10 +53,7 @@ pip install -r requirements.py
 开发环境下，若使用默认端口，则不需要进行任何修改，即可运行；若需要进行生产部署或修改开发环境接口地址请参照：
 
 - 项目开发环境默认使用后端接口为http://127.0.0.1:8000，该接口与后端代码运行端口对应；若需要修改，请保证后端运行接口同步修改！开发环境配置文件地址：.env.development
-
 - 生产环境(项目打包时所使用环境)：打包部署文件前，请将生产环境接口替换为自己已部署后端接口地址。生产环境配置文件地址：.env.production
-
-
 
 ## 4.后端初始化设置
 
@@ -99,7 +96,9 @@ API_LOG_METHODS="POST,PUT,DELETE"
 **2. 生成SECRET_KEY并设置**
 
 **3. 数据库初始化**
+
 - Mysql数据库(推荐)
+
 1. 在.env文件中设置`DB_ENGINE`为`mysql`, 切换至mysql数据库引擎, 并设置好数据库参数
 2. 使用已有的迁移文件进行迁移, 创建表结构
 
@@ -107,17 +106,14 @@ API_LOG_METHODS="POST,PUT,DELETE"
 python manage.py migrate
 ```
 
-3. 将sqlite内数据作为初始化数据导入mysql数据库
-   1. 将初始数据生成为json数据 
-   ```shell
-   python manage.py dumpdata > data.json
-   ```
-   2. 将初始数据导入mysql数据库 注意：若启用redis缓存，则需要启动redis服务或者将`.env`里`USE_REDIS`设为`False`，否则将报错
+3. 将初始数据导入mysql数据库 注意：若启用redis缓存，则需要启动redis服务或者将`.env`里`USE_REDIS`设为`False`，否则将报错
+
    ```shell
    python manage.py loaddata ./data.json
    ```
 
 - SQLite数据库(本地开发可使用，不建议部署)
+
 1. 在.env文件中设置`DB_ENGINE`为`sqlite3`, 切换至sqlite数据库引擎
 2. 使用已有的迁移文件进行迁移即可`python manage.py migrate`
 3. 注意：由于sqllite在删除数据后并不会释放空间，会导致数据文件不断增大，故需要不定时使用`VACUUM指令，释放占用空间，避免文件过大

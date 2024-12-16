@@ -3,7 +3,7 @@ import { defaultTheme } from "@vuepress/theme-default";
 import { defineUserConfig } from "vuepress";
 
 export default defineUserConfig({
-  title: "PureDRF",
+  title: "Pure-Drf-Admin",
   lang: "zh-CN",
   dest: "dist/docs",
   base: "/docs/",
@@ -19,6 +19,10 @@ export default defineUserConfig({
         text: "开发文档",
         prefix: "/devdoc/",
         children: ["introduction.md", "quickstart.md"]
+      },
+      {
+        text: "项目预览",
+        link: "https://puredrf.kworlds.cn/"
       },
       {
         text: "前端代码",

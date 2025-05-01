@@ -10,8 +10,11 @@ function handleSearch() {
 
 <template>
   <div>
-    <div class="search-container w-[40px] h-[48px] flex-c cursor-pointer navbar-bg-hover" @click="handleSearch">
-      <IconifyIconOffline icon="ri:search-line" />
+    <div
+      class="search-container w-[40px] h-[48px] flex-c cursor-pointer navbar-bg-hover"
+      @click="handleSearch"
+    >
+      <IconifyIconOffline icon="ri/search-line" />
     </div>
     <SearchModal v-model:value="show" />
   </div>

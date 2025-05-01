@@ -27,8 +27,8 @@ const calculate = (e: PointerEvent, el: HTMLElement, value: RippleOptions = {}) 
   const offset = el.getBoundingClientRect();
 
   // 获取点击位置距离 el 的垂直和水平距离
-  let localX = e.clientX - offset.left;
-  let localY = e.clientY - offset.top;
+  const localX = e.clientX - offset.left;
+  const localY = e.clientY - offset.top;
 
   let radius = 0;
   let scale = 0.3;

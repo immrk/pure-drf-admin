@@ -12,11 +12,11 @@ import { usePermissionStoreHook } from "@/store/modules/permission";
 import { ref, watch, unref, toRaw, nextTick, onBeforeUnmount } from "vue";
 import { delay, isEqual, isAllEmpty, useResizeObserver } from "@pureadmin/utils";
 
-import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
-import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
-import ArrowDown from "@iconify-icons/ri/arrow-down-s-line";
-import ArrowRightSLine from "@iconify-icons/ri/arrow-right-s-line";
-import ArrowLeftSLine from "@iconify-icons/ri/arrow-left-s-line";
+import ExitFullscreen from "~icons/ri/fullscreen-exit-fill";
+import Fullscreen from "~icons/ri/fullscreen-fill";
+import ArrowDown from "~icons/ri/arrow-down-s-line";
+import ArrowRightSLine from "~icons/ri/arrow-right-s-line";
+import ArrowLeftSLine from "~icons/ri/arrow-left-s-line";
 
 const { Close, route, router, visible, showTags, instance, multiTags, tagsViews, buttonTop, buttonLeft, showModel, translateX, isFixedTag, pureSetting, activeIndex, getTabStyle, isScrolling, iconIsActive, linkIsActive, currentSelect, scheduleIsActive, getContextMenuStyle, closeMenu, onMounted, onMouseenter, onMouseleave, onContentFullScreen } = useTags();
 
@@ -435,6 +435,7 @@ function tagOnClick(item) {
   } else {
     router.push({ path });
   }
+  emitter.emit("tagOnClick", item);
 }
 
 onClickOutside(contextmenuRef, closeMenu, {
@@ -492,7 +493,9 @@ onBeforeUnmount(() => {
       <div ref="tabDom" class="tab select-none" :style="getTabStyle">
         <div v-for="(item, index) in multiTags" :ref="'dynamic' + index" :key="index" :class="['scroll-item is-closable', linkIsActive(item), showModel === 'chrome' && 'chrome-item', isFixedTag(item) && 'fixed-tag']" @contextmenu.prevent="openMenu(item, $event)" @mouseenter.prevent="onMouseenter(index)" @mouseleave.prevent="onMouseleave(index)" @click="tagOnClick(item)">
           <template v-if="showModel !== 'chrome'">
-            <span class="tag-title dark:!text-text_color_primary dark:hover:!text-primary">
+            <span
+              class="tag-title dark:text-text_color_primary! dark:hover:text-primary!"
+            >
               {{ item.meta.title }}
             </span>
             <span v-if="isFixedTag(item) ? false : iconIsActive(item, index) || (index === activeIndex && index !== 0)" class="el-icon-close" @click.stop="deleteMenu(item)">

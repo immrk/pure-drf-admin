@@ -5,7 +5,7 @@ import type { FormRules } from "element-plus";
 export const REGEXP_PWD = /^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)]|[()])+$)(?!^.*[\u4E00-\u9FA5].*$)([^(0-9a-zA-Z)]|[()]|[a-z]|[A-Z]|[0-9]){8,18}$/;
 
 /** 登录校验 */
-const loginRules = reactive(<FormRules>{
+const loginRules = reactive<FormRules>({
   password: [
     {
       validator: (rule, value, callback) => {

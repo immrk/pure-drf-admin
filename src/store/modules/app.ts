@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 import { type appType, store, getConfig, storageLocal, deviceDetection, responsiveStorageNameSpace } from "../utils";
 
-export const useAppStore = defineStore({
-  id: "pure-app",
+export const useAppStore = defineStore("pure-app", {
   state: (): appType => ({
     sidebar: {
       opened: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}layout`)?.sidebarStatus ?? getConfig().SidebarStatus,
@@ -62,9 +61,6 @@ export const useAppStore = defineStore({
     },
     setViewportSize(size) {
       this.viewportSize = size;
-    },
-    setSortSwap(val) {
-      this.sortSwap = val;
     }
   }
 });

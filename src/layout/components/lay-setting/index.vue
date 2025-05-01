@@ -4,15 +4,14 @@ import { emitter } from "@/utils/mitt";
 import LayPanel from "../lay-panel/index.vue";
 import { useNav } from "@/layout/hooks/useNav";
 import { useAppStoreHook } from "@/store/modules/app";
-import { toggleTheme } from "@pureadmin/theme/dist/browser-utils";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import Segmented, { type OptionsType } from "@/components/ReSegmented";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 import { useDark, useGlobal, debounce, isNumber } from "@pureadmin/utils";
 
-import Check from "@iconify-icons/ep/check";
-import LeftArrow from "@iconify-icons/ri/arrow-left-s-line";
-import RightArrow from "@iconify-icons/ri/arrow-right-s-line";
+import Check from "~icons/ep/check";
+import LeftArrow from "~icons/ri/arrow-left-s-line?width=20&height=20";
+import RightArrow from "~icons/ri/arrow-right-s-line?width=20&height=20";
 import DayIcon from "@/assets/svg/day.svg?component";
 import DarkIcon from "@/assets/svg/dark.svg?component";
 import SystemIcon from "@/assets/svg/system.svg?component";
@@ -31,9 +30,7 @@ const { dataTheme, overallStyle, layoutTheme, themeColors, toggleClass, dataThem
 if (unref(layoutTheme)) {
   const layout = unref(layoutTheme).layout;
   const theme = unref(layoutTheme).theme;
-  toggleTheme({
-    scopeName: `layout-theme-${theme}`
-  });
+  document.documentElement.setAttribute("data-theme", theme);
   setLayoutModel(layout);
 }
 
@@ -165,7 +162,7 @@ const getThemeColor = computed(() => {
 });
 
 const pClass = computed(() => {
-  return ["mb-[12px]", "font-medium", "text-sm", "dark:text-white"];
+  return ["mb-[12px]!", "font-medium", "text-sm", "dark:text-white"];
 });
 
 const themeOptions = computed<Array<OptionsType>>(() => {
@@ -307,7 +304,7 @@ onUnmounted(() => removeMatchMedia);
         "
       />
 
-      <p :class="['mt-5', pClass]">主题色</p>
+      <p :class="['mt-5!', pClass]">主题色</p>
       <ul class="theme-color">
         <li v-for="(item, index) in themeColors" v-show="showThemeColors(item.themeColor)" :key="index" :style="getThemeColorStyle(item.color)" @click="setLayoutThemeColor(item.themeColor)">
           <el-icon style="margin: 0.1em 0.1em 0 0" :size="17" :color="getThemeColor(item.themeColor)">
@@ -316,7 +313,7 @@ onUnmounted(() => removeMatchMedia);
         </li>
       </ul>
 
-      <p :class="['mt-5', pClass]">导航模式</p>
+      <p :class="['mt-5!', pClass]">导航模式</p>
       <ul class="pure-theme">
         <li
           ref="verticalRef"
@@ -359,22 +356,57 @@ onUnmounted(() => removeMatchMedia);
       </ul>
 
       <span v-if="useAppStoreHook().getViewportWidth > 1280">
-        <p :class="['mt-5', pClass]">页宽</p>
-        <Segmented resize class="mb-2 select-none" :modelValue="isNumber(settings.stretch) ? 1 : 0" :options="stretchTypeOptions" @change="stretchTypeChange" />
-        <el-input-number v-if="isNumber(settings.stretch)" v-model="settings.stretch as number" :min="1280" :max="1600" controls-position="right" @change="value => setStretch(value)" />
-        <button v-else v-ripple="{ class: 'text-gray-300' }" class="bg-transparent flex-c w-full h-20 rounded-md border border-[var(--pure-border-color)]" @click="setStretch(!settings.stretch)">
-          <div class="flex-bc transition-all duration-300" :class="[settings.stretch ? 'w-[24%]' : 'w-[50%]']" style="color: var(--el-color-primary)">
-            <IconifyIconOffline :icon="settings.stretch ? RightArrow : LeftArrow" height="20" />
-            <div class="flex-grow border-b border-dashed" style="border-color: var(--el-color-primary)" />
-            <IconifyIconOffline :icon="settings.stretch ? LeftArrow : RightArrow" height="20" />
+        <p :class="['mt-5!', pClass]">页宽</p>
+        <Segmented
+          resize
+          class="mb-2 select-none"
+          :modelValue="isNumber(settings.stretch) ? 1 : 0"
+          :options="stretchTypeOptions"
+          @change="stretchTypeChange"
+        />
+        <el-input-number
+          v-if="isNumber(settings.stretch)"
+          v-model="settings.stretch as number"
+          :min="1280"
+          :max="1600"
+          controls-position="right"
+          @change="value => setStretch(value)"
+        />
+        <button
+          v-else
+          v-ripple="{ class: 'text-gray-300' }"
+          class="bg-transparent flex-c w-full h-20 rounded-md border border-[var(--pure-border-color)]"
+          @click="setStretch(!settings.stretch)"
+        >
+          <div
+            class="flex-bc transition-all duration-300"
+            :class="[settings.stretch ? 'w-[24%]' : 'w-[50%]']"
+            style="color: var(--el-color-primary)"
+          >
+            <IconifyIconOffline
+              :icon="settings.stretch ? RightArrow : LeftArrow"
+            />
+            <div
+              class="grow border-0 border-b border-dashed"
+              style="border-color: var(--el-color-primary)"
+            />
+            <IconifyIconOffline
+              :icon="settings.stretch ? LeftArrow : RightArrow"
+            />
           </div>
         </button>
       </span>
 
-      <p :class="['mt-4', pClass]">页签风格</p>
-      <Segmented resize class="select-none" :modelValue="markValue === 'smart' ? 0 : markValue === 'card' ? 1 : 2" :options="markOptions" @change="onChange" />
+      <p :class="['mt-4!', pClass]">页签风格</p>
+      <Segmented
+        resize
+        class="select-none"
+        :modelValue="markValue === 'smart' ? 0 : markValue === 'card' ? 1 : 2"
+        :options="markOptions"
+        @change="onChange"
+      />
 
-      <p class="mt-5 font-medium text-sm dark:text-white">界面显示</p>
+      <p class="mt-5! font-medium text-sm dark:text-white">界面显示</p>
       <ul class="setting">
         <li>
           <span class="dark:text-white">灰色模式</span>

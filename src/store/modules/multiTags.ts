@@ -2,12 +2,24 @@ import { defineStore } from "pinia";
 import { type multiType, type positionType, store, isUrl, isEqual, isNumber, isBoolean, getConfig, routerArrays, storageLocal, responsiveStorageNameSpace } from "../utils";
 import { usePermissionStoreHook } from "./permission";
 
-export const useMultiTagsStore = defineStore({
-  id: "pure-multiTags",
+export const useMultiTagsStore = defineStore("pure-multiTags", {
   state: () => ({
     // 存储标签页信息（路由信息）
-    multiTags: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.multiTagsCache ? storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}tags`) : [...routerArrays, ...usePermissionStoreHook().flatteningRoutes.filter(v => v?.meta?.fixedTag)],
-    multiTagsCache: storageLocal().getItem<StorageConfigs>(`${responsiveStorageNameSpace()}configure`)?.multiTagsCache
+    multiTags: storageLocal().getItem<StorageConfigs>(
+      `${responsiveStorageNameSpace()}configure`
+    )?.multiTagsCache
+      ? storageLocal().getItem<StorageConfigs>(
+          `${responsiveStorageNameSpace()}tags`
+        )
+      : ([
+          ...routerArrays,
+          ...usePermissionStoreHook().flatteningRoutes.filter(
+            v => v?.meta?.fixedTag
+          )
+        ] as any),
+    multiTagsCache: storageLocal().getItem<StorageConfigs>(
+      `${responsiveStorageNameSpace()}configure`
+    )?.multiTagsCache
   }),
   getters: {
     getMultiTagsCache(state) {

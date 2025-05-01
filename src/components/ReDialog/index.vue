@@ -2,8 +2,8 @@
 import { type EventType, type ButtonProps, type DialogOptions, closeDialog, dialogStore } from "./index";
 import { ref, computed } from "vue";
 import { isFunction } from "@pureadmin/utils";
-import Fullscreen from "@iconify-icons/ri/fullscreen-fill";
-import ExitFullscreen from "@iconify-icons/ri/fullscreen-exit-fill";
+import Fullscreen from "~icons/ri/fullscreen-fill";
+import ExitFullscreen from "~icons/ri/fullscreen-exit-fill";
 
 defineOptions({
   name: "ReDialog"
@@ -63,7 +63,13 @@ const footerButtons = computed(() => {
 });
 
 const fullscreenClass = computed(() => {
-  return ["el-icon", "el-dialog__close", "-translate-x-2", "cursor-pointer", "hover:!text-[red]"];
+  return [
+    "el-icon",
+    "el-dialog__close",
+    "-translate-x-2",
+    "cursor-pointer",
+    "hover:text-[red]!"
+  ];
 });
 
 function eventsCallBack(event: EventType, options: DialogOptions, index: number, isClickFullScreen = false) {

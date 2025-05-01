@@ -3,26 +3,30 @@ import Motion from "./utils/motion";
 import { useRouter } from "vue-router";
 import { message } from "@/utils/message";
 import { loginRules } from "./utils/rule";
+import { ref, reactive, toRaw } from "vue";
+import { debounce } from "@pureadmin/utils";
 import { useNav } from "@/layout/hooks/useNav";
+import { useEventListener } from "@vueuse/core";
 import type { FormInstance } from "element-plus";
 import { useLayout } from "@/layout/hooks/useLayout";
 import { useUserStoreHook } from "@/store/modules/user";
 import { initRouter, getTopMenu } from "@/router/utils";
 import { bg, avatar, illustration } from "./utils/static";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { ref, reactive, toRaw, onMounted, onBeforeUnmount } from "vue";
 import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
 import dayIcon from "@/assets/svg/day.svg?component";
 import darkIcon from "@/assets/svg/dark.svg?component";
-import Lock from "@iconify-icons/ri/lock-fill";
-import User from "@iconify-icons/ri/user-3-fill";
+import Lock from "~icons/ri/lock-fill";
+import User from "~icons/ri/user-3-fill";
 
 defineOptions({
   name: "Login"
 });
+
 const router = useRouter();
 const loading = ref(false);
+const disabled = ref(false);
 const ruleFormRef = ref<FormInstance>();
 
 const { initStorage } = useLayout();
@@ -39,7 +43,7 @@ const ruleForm = reactive({
 
 const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
-  await formEl.validate((valid, fields) => {
+  await formEl.validate(valid => {
     if (valid) {
       loading.value = true;
       useUserStoreHook()
@@ -62,19 +66,19 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   });
 };
 
-/** 使用公共函数，避免`removeEventListener`失效 */
-function onkeypress({ code }: KeyboardEvent) {
-  if (["Enter", "NumpadEnter"].includes(code)) {
-    onLogin(ruleFormRef.value);
-  }
-}
+const immediateDebounce: any = debounce(
+  formRef => onLogin(formRef),
+  1000,
+  true
+);
 
-onMounted(() => {
-  window.document.addEventListener("keypress", onkeypress);
-});
-
-onBeforeUnmount(() => {
-  window.document.removeEventListener("keypress", onkeypress);
+useEventListener(document, "keydown", ({ code }) => {
+  if (
+    ["Enter", "NumpadEnter"].includes(code) &&
+    !disabled.value &&
+    !loading.value
+  )
+    immediateDebounce(ruleFormRef.value);
 });
 </script>
 
@@ -96,7 +100,7 @@ onBeforeUnmount(() => {
         <div class="login-form">
           <avatar class="avatar" />
           <Motion>
-            <h2 class="outline-none">{{ title }}</h2>
+            <h2 class="outline-hidden">{{ title }}</h2>
           </Motion>
 
           <el-form ref="ruleFormRef" :model="ruleForm" :rules="loginRules" size="large">

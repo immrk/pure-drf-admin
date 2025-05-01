@@ -50,6 +50,8 @@
     "url": "https://github.com/xiaoxian521"
   },
   "dependencies": {
+    "@iconify-icons/ep": "^1.2.12",
+    "@iconify-icons/ri": "^1.2.10",
     "@pureadmin/descriptions": "^1.2.1",
     "@pureadmin/table": "^3.2.1",
     "@pureadmin/utils": "^2.6.0",

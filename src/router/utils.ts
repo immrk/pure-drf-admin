@@ -140,7 +140,7 @@ function handleAsyncRoutes(routeList) {
           router.addRoute(flattenRouters);
         }
       }
-    });
+    );
     usePermissionStoreHook().handleWholeMenus(routeList);
   }
   if (!useMultiTagsStoreHook().getMultiTagsCache) {

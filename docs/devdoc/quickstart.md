@@ -93,32 +93,38 @@ API_LOG_ENABLE=True
 API_LOG_METHODS="POST,PUT,DELETE"
 ```
 
-**2. 生成SECRET_KEY并设置**
+**2. 生成SECRET_KEY并设置到.env文件**
+
+```
+python -c "import secrets; print(secrets.token_urlsafe(50))"
+```
 
 **3. 数据库初始化**
 
-- Mysql数据库(推荐)
+**目前项目已支持数据一键初始化，首次初始化无需migrate，具体如下：**
 
-1. 在.env文件中设置`DB_ENGINE`为`mysql`, 切换至mysql数据库引擎, 并设置好数据库参数
-2. 使用已有的迁移文件进行迁移, 创建表结构
+⚠️注意：1.命令运行请在后端根目录下运行；2. 需要在.env文件夹下完成数据库相关配置
 
-```shell
-python manage.py migrate
+```
+python dbinit.py
 ```
 
-3. 将初始数据导入mysql数据库 注意：若启用redis缓存，则需要启动redis服务或者将`.env`里`USE_REDIS`设为`False`，否则将报错
+若无法完成一键导入，也可以手动导入sql文件；初始化所需sql脚本在`/script/sql/`文件夹内
 
-   ```shell
-   python manage.py loaddata ./data.json
+## 5.项目默认帐户
+
+1. 超级管理员帐户
+   ````
+   帐户：admin@kworlds.cn
+   密码：k12345678
+   ````
+2. 预览用户帐户
+   ```
+   帐户: preview@kworlds.cn
+   密码：k12345678
    ```
 
-- SQLite数据库(本地开发可使用，不建议部署)
-
-1. 在.env文件中设置`DB_ENGINE`为`sqlite3`, 切换至sqlite数据库引擎
-2. 使用已有的迁移文件进行迁移即可`python manage.py migrate`
-3. 注意：由于sqllite在删除数据后并不会释放空间，会导致数据文件不断增大，故需要不定时使用`VACUUM指令，释放占用空间，避免文件过大
-
-## 5.启动项目开始体验！
+## 6.启动项目开始体验！
 
 启动前端：
 

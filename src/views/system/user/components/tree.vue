@@ -4,9 +4,9 @@ import { ref, computed, watch, getCurrentInstance } from "vue";
 
 import Dept from "@iconify-icons/ri/git-branch-line";
 // import Reset from "@iconify-icons/ri/restart-line";
-import More2Fill from "@iconify-icons/ri/more-2-fill";
-import OfficeBuilding from "@iconify-icons/ep/office-building";
-import LocationCompany from "@iconify-icons/ep/add-location";
+// import More2Fill from "@iconify-icons/ri/more-2-fill";
+// import OfficeBuilding from "@iconify-icons/ep/office-building";
+// import LocationCompany from "@iconify-icons/ep/add-location";
 import ExpandIcon from "../svg/expand.svg?component";
 import UnExpandIcon from "../svg/unexpand.svg?component";
 
@@ -87,12 +87,12 @@ defineExpose({ onTreeReset });
       <el-input v-model="searchValue" class="ml-2" size="small" placeholder="请输入部门名称" clearable>
         <template #suffix>
           <el-icon class="el-input__icon">
-            <IconifyIconOffline v-show="searchValue.length === 0" icon="ri:search-line" />
+            <IconifyIconOnline v-show="searchValue.length === 0" icon="ri:search-line" />
           </el-icon>
         </template>
       </el-input>
       <el-dropdown :hide-on-click="false">
-        <IconifyIconOffline class="w-[28px] cursor-pointer" width="18px" :icon="More2Fill" />
+        <IconifyIconOnline class="w-[28px] cursor-pointer" width="18px" icon="ri:more-2-fill" />
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>
@@ -125,7 +125,7 @@ defineExpose({ onTreeReset });
             background: highlightMap[node.id]?.highlight ? 'var(--el-color-primary-light-7)' : 'transparent'
           }"
         >
-          <IconifyIconOffline :icon="data.type === 1 ? OfficeBuilding : data.type === 2 ? LocationCompany : Dept" />
+          <IconifyIconOnline :icon="data.type === 1 ? 'ep:office-building' : data.type === 2 ? 'ep:add-location-line' : 'ri:git-branch-line'" />
           {{ node.label }}
         </span>
       </template>

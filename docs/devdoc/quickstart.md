@@ -38,6 +38,8 @@ git clone https://github.com/immrk/pure-drf-admin.git
 pnpm install
 ```
 
+_注意：MAC系统安装mysqlclient库时报错的解决方法：`brew install mysql` 完成系统mysql相关库的安装即可_
+
 - 获取后端代码，并安装所需依赖库(建议创建python虚拟环境，避免第三方库干扰)
 
 ```git
@@ -45,7 +47,7 @@ git clone https://github.com/immrk/pure-drf-admin-backend.git
 ```
 
 ```
-pip install -r requirements.py
+pip install -r requirements.txt
 ```
 
 ## 3.前端初始化设置
@@ -114,10 +116,10 @@ python dbinit.py
 ## 5.项目默认帐户
 
 1. 超级管理员帐户
-   ````
+   ```
    帐户：admin@kworlds.cn
    密码：k12345678
-   ````
+   ```
 2. 预览用户帐户
    ```
    帐户: preview@kworlds.cn

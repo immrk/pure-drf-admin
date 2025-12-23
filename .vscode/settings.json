@@ -1,6 +1,7 @@
 {
-  "editor.formatOnType": false,
-  "editor.formatOnSave": false,
+  "tailwindCSS.experimental.configFile": "src/style/tailwind.css",
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

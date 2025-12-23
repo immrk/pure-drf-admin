@@ -1,5 +1,9 @@
 # 项目更新日志
 
+## 2025.12.23 [版本更新]同步更新pure admin版本为6.2.0
+
+- 前端：同步pure admin最新发行版本进行更新，未设计本FORK项目的内容恭喜，更新那些详见框架更新公告[https://github.com/pure-admin/vue-pure-admin/releases/tag/v6.2.0](https://github.com/pure-admin/vue-pure-admin/releases/tag/v6.2.0)
+
 ## 2025.05.23 [前端bug修复]修复部分 子菜单 组件匹配错误的bug
 
 - 前端：临时在[pure-drf-admin](https://github.com/immrk/pure-drf-admin)前端前端项目内，修复组件匹配错误的bug（偶发性bug，初步分析原因为父路由组件与子路由组件冲突导致），但pure-admin框架暂未修复该bug，待框架更新后会同步对齐该部分代码

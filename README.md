@@ -1,6 +1,6 @@
 <h1>Pure-drf 开源RBAC后台管理系统</h1>
 
-*该页为前端代码，后端项目请前往[后端代码：pure-drf-admin-backend](https://github.com/immrk/pure-drf-admin-backend)*
+_该页为前端代码，后端项目请前往[后端代码：pure-drf-admin-backend](https://github.com/immrk/pure-drf-admin-backend)_
 
 [![license](https://img.shields.io/github/license/pure-admin/vue-pure-admin.svg)](LICENSE)
 
@@ -22,12 +22,9 @@ Pure drf 是一个使用Vue作为前端、Django(DRF)作为后端的RBAC开源�
 预览账号: user@kworlds.cn
 账号密码：k12345678
 
-
-
 ## 配套开发文档
 
 [点我查看 PureDRF 文档➡️](https://puredrf.kworlds.cn/docs/)
-
 
 ## 维护者
 
@@ -41,4 +38,3 @@ keyajian@gmail.com
 ## 许可证
 
 [MIT © 2024-present, puredrf](./LICENSE)
-
